@@ -1,0 +1,391 @@
+/* Giftelier Vendor Dashboard — horizontal top navigation */
+
+/* ── Hide original Dokan sidebar shell, show our nav ──────────────── */
+
+.dokan-dash-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    float: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Remove original dokan-dashboard-menu styles */
+.dokan-dash-sidebar #dokan-navigation,
+.dokan-dash-sidebar .dokan-dashboard-menu,
+.dokan-dash-sidebar label#mobile-menu-icon,
+.dokan-dash-sidebar #toggle-mobile-menu {
+    display: none !important;
+}
+
+/* Stack sidebar above content */
+.dokan-dashboard-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.dokan-dashboard-content {
+    width: 100% !important;
+    float: none !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* ── Giftelier top nav ─────────────────────────────────────────────── */
+
+.gm-vendor-topnav {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #5733a2 0%, #7d1f6e 100%);
+    height: 56px;
+    padding: 0 20px;
+    box-shadow: 0 2px 12px rgba(87, 51, 162, 0.4);
+    gap: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible !important; /* dropdowns must not be clipped */
+}
+
+/* ── Brand ─────────────────────────────────────────────────────────── */
+
+.gm-vnav-brand {
+    display: flex;
+    align-items: center;
+    padding-right: 24px;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+}
+
+.gm-vnav-logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.gm-vnav-logo-text {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+/* ── Nav links list ────────────────────────────────────────────────── */
+
+.gm-vnav-menu {
+    display: flex !important;
+    align-items: center;
+    flex: 1;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    gap: 2px;
+    overflow: visible !important; /* must be visible so dropdowns aren't clipped */
+}
+
+.gm-vnav-item {
+    flex-shrink: 0;
+}
+
+.gm-vnav-item a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 13px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72) !important;
+    text-decoration: none !important;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.gm-vnav-item a:hover,
+.gm-vnav-item a:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.gm-vnav-item--active a {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.gm-vnav-item--active a:hover {
+    background: rgba(255, 255, 255, 0.26) !important;
+    color: #fff !important;
+}
+
+/* Badge (order count etc.) */
+.gm-vnav-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #5733a2;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    margin-left: 2px;
+}
+
+/* ── Right side ────────────────────────────────────────────────────── */
+
+.gm-vnav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    padding-left: 16px;
+    flex-shrink: 0;
+}
+
+/* ── Add Product button ────────────────────────────────────────────── */
+
+.gm-vnav-add-product {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    background: #fff;
+    color: #5733a2 !important;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background 0.15s, box-shadow 0.15s;
+    flex-shrink: 0;
+}
+
+.gm-vnav-add-product:hover {
+    background: #f0ebff;
+    color: #3d1f85 !important;
+    text-decoration: none !important;
+}
+
+.gm-vnav-store-link {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-decoration: none !important;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.gm-vnav-store-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+}
+
+/* ── Avatar dropdown ───────────────────────────────────────────────── */
+
+.gm-vnav-account {
+    position: relative;
+}
+
+.gm-vnav-avatar-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.gm-vnav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: block;
+    transition: border-color 0.15s;
+    cursor: pointer;
+}
+
+.gm-vnav-avatar-btn:hover .gm-vnav-avatar,
+.gm-vnav-avatar-btn[aria-expanded="true"] .gm-vnav-avatar {
+    border-color: #e8a045;
+}
+
+/* ── Support dropdown trigger button ───────────────────────────────── */
+
+.gm-vnav-item--has-dropdown {
+    position: relative;
+}
+
+.gm-vnav-support-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.gm-vnav-support-btn:hover,
+.gm-vnav-support-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.gm-vnav-item--active .gm-vnav-support-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: 600;
+}
+
+.gm-vnav-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.gm-vnav-support-btn[aria-expanded="true"] .gm-vnav-chevron {
+    transform: rotate(180deg);
+}
+
+/* ── Shared dropdown menu styles ────────────────────────────────────── */
+
+.gm-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    background: #fff;
+    border: 1px solid #eaecf0;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.13);
+    min-width: 200px;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 6px 0 !important;
+    z-index: 1000;
+}
+
+/* JS-driven open */
+.gm-dropdown-menu.gm-dropdown--open {
+    display: block;
+}
+
+/* CSS-only fallback: show when any child has focus (:focus-within) */
+.gm-vnav-item--has-dropdown:focus-within .gm-dropdown-menu,
+.gm-vnav-account:focus-within .gm-dropdown-menu {
+    display: block;
+}
+
+/* Support menu opens left-aligned; Account opens right-aligned */
+.gm-vnav-support-menu {
+    left: 0;
+}
+
+.gm-vnav-account-menu {
+    right: 0;
+}
+
+/* Section header label */
+.gm-dropdown-header {
+    padding: 8px 16px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #a0a4b0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Divider */
+.gm-dropdown-divider {
+    height: 1px;
+    background: #eaecf0;
+    margin: 4px 0;
+}
+
+/* Menu items */
+.gm-dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 16px;
+    font-size: 13.5px;
+    color: #2d3142 !important;
+    text-decoration: none !important;
+    transition: background 0.12s;
+    white-space: nowrap;
+}
+
+.gm-dropdown-menu li a:hover {
+    background: #f6f7f9;
+    color: #1a1a2e !important;
+}
+
+.gm-dropdown-menu li a svg {
+    color: #8a8f9c;
+    flex-shrink: 0;
+}
+
+.gm-dropdown-menu li a:hover svg {
+    color: #e8a045;
+}
+
+/* Log out gets a subtle red tint */
+.gm-dropdown-logout {
+    color: #dc2626 !important;
+}
+
+.gm-dropdown-logout svg {
+    color: #dc2626 !important;
+}
+
+.gm-dropdown-logout:hover {
+    background: #fff5f5 !important;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .gm-vendor-topnav {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .gm-vnav-brand {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .gm-vnav-menu {
+        order: 3;
+        width: 100%;
+        padding: 4px 0 !important;
+        gap: 0;
+    }
+
+    .gm-vnav-right {
+        margin-left: auto;
+    }
+}
