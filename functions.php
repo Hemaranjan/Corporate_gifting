@@ -61,6 +61,10 @@ add_filter( 'woocommerce_login_redirect', function ( $redirect, $user ) {
     if ( ! empty( $_REQUEST['redirect_to'] ) ) {
         return sanitize_url( wp_unslash( $_REQUEST['redirect_to'] ) );
     }
+    // Admins always go to wp-admin
+    if ( in_array( 'administrator', (array) $user->roles ) ) {
+        return admin_url();
+    }
     // Vendors go to Dokan dashboard
     if ( function_exists( 'dokan_is_user_seller' ) && dokan_is_user_seller( $user->ID ) ) {
         return dokan_get_navigation_url();
@@ -71,6 +75,10 @@ add_filter( 'woocommerce_login_redirect', function ( $redirect, $user ) {
 // Also catch the standard wp-login.php redirect
 add_filter( 'login_redirect', function ( $redirect_to, $request, $user ) {
     if ( is_wp_error( $user ) ) return $redirect_to;
+    // Admins always go to wp-admin
+    if ( in_array( 'administrator', (array) $user->roles ) ) {
+        return admin_url();
+    }
     if ( function_exists( 'dokan_is_user_seller' ) && dokan_is_user_seller( $user->ID ) ) {
         return dokan_get_navigation_url();
     }
