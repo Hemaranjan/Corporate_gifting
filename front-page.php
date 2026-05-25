@@ -24,6 +24,10 @@ $login_url = function_exists( 'wc_get_page_permalink' )
 // After login, functions.php redirect filters route vendors → Dokan, customers → calendar.
 $cta_url = $login_url;
 
+// Store listing page URL (Dokan).
+$store_listing_id  = function_exists( 'dokan_get_option' ) ? dokan_get_option( 'store_listing', 'dokan_pages' ) : 0;
+$store_listing_url = $store_listing_id ? get_permalink( (int) $store_listing_id ) : home_url( '/store-listing/' );
+
 // Products for the browse section
 $products = wc_get_products( [
     'status' => 'publish',
@@ -229,7 +233,7 @@ $products = wc_get_products( [
         </div>
 
         <div class="gmp-gifts-more">
-            <a href="<?php echo esc_url( $login_url ); ?>" class="gmp-btn gmp-btn--outline gmp-btn--lg">
+            <a href="<?php echo esc_url( $store_listing_url ); ?>" class="gmp-btn gmp-btn--outline gmp-btn--lg">
                 View all gifts →
             </a>
         </div>
