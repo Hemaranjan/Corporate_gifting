@@ -422,9 +422,21 @@ class GM_Quotes {
 	 * @param array $qv
 	 */
 	public function load_vendor_quotes( $qv ) {
-		if ( isset( $qv['gm-quotes'] ) ) {
-			include GM_PATH . 'templates/vendor/quotes.php';
+		if ( ! isset( $qv['gm-quotes'] ) ) {
+			return;
 		}
+		// Wrap with the same structure all Dokan templates use so the nav renders.
+		do_action( 'dokan_dashboard_wrap_start' );
+		echo '<div class="dokan-dashboard-wrap">';
+		do_action( 'dokan_dashboard_content_before' );
+		echo '<div class="dokan-dashboard-content">';
+		do_action( 'dokan_dashboard_content_inside_before' );
+		include GM_PATH . 'templates/vendor/quotes.php';
+		do_action( 'dokan_dashboard_content_inside_after' );
+		echo '</div>';
+		do_action( 'dokan_dashboard_content_after' );
+		echo '</div>';
+		do_action( 'dokan_dashboard_wrap_end' );
 	}
 
 	// -------------------------------------------------------------------------
