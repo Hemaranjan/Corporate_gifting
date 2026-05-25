@@ -115,14 +115,8 @@ $account_items = [
         <?php endforeach; ?>
     </ul>
 
-    <!-- Right: Add Product button + store link + account dropdown -->
+    <!-- Right: store link + account dropdown -->
     <div class="gm-vnav-right">
-
-        <a href="<?php echo esc_url( dokan_get_new_product_url() ); ?>"
-           class="gm-vnav-add-product">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Product
-        </a>
 
         <a href="<?php echo esc_url( $store_url ); ?>" class="gm-vnav-store-link"
            title="<?php esc_attr_e( 'Visit Store', 'dokan-lite' ); ?>" target="_blank">
