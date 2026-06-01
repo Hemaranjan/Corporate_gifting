@@ -33,6 +33,9 @@ class GM_Customer_Dashboard {
             add_action( "woocommerce_account_{$slug}_endpoint", [ $this, 'render_endpoint' ] );
         }
 
+        // Access guard: unauthenticated → login, vendors → Dokan dashboard
+        add_action( 'template_redirect', [ $this, 'guard_endpoints' ], 5 );
+
         // Remove Dokan vendor-related sections from My Account
         add_action( 'wp', [ $this, 'remove_become_a_vendor' ], 20 );
         add_action( 'wp', [ $this, 'remove_vendor_dashboard_button' ], 20 );
@@ -61,6 +64,36 @@ class GM_Customer_Dashboard {
         remove_action( 'woocommerce_after_my_account', [ $fm, 'show_vendor_dashboard_notice' ], 10 );
         // Suppress all actions on account_dashboard to prevent vendor content leaking
         remove_all_actions( 'woocommerce_account_dashboard' );
+    }
+
+    /* ── Access guard ────────────────────────────────────────────── */
+
+    public function guard_endpoints() {
+        if ( ! is_account_page() ) return;
+
+        $on_our_endpoint = false;
+        foreach ( array_keys( self::ENDPOINTS ) as $slug ) {
+            if ( is_wc_endpoint_url( $slug ) ) {
+                $on_our_endpoint = true;
+                break;
+            }
+        }
+        if ( ! $on_our_endpoint ) return;
+
+        // TC07: unauthenticated users → login page
+        if ( ! is_user_logged_in() ) {
+            wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+            exit;
+        }
+
+        // TC09: vendors → Dokan dashboard (admins are exempt)
+        $uid = get_current_user_id();
+        if ( ! current_user_can( 'manage_options' )
+             && function_exists( 'dokan_is_user_seller' )
+             && dokan_is_user_seller( $uid ) ) {
+            wp_safe_redirect( dokan_get_navigation_url() );
+            exit;
+        }
     }
 
     /* ── Endpoints & rewrite ──────────────────────────────────────── */
