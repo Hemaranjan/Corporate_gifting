@@ -1,0 +1,344 @@
+/* Giftelier — Budget Planner: segment selector + pots table + modal */
+
+/* ── Segment selector ────────────────────────────────────────────── */
+
+.gm-segment-card .gm-dash-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.gm-segment-card .gm-dash-card__sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.gm-segment-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.gm-segment-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #374151;
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.gm-segment-pill:hover {
+    background: #f3f4f6;
+    border-color: #c4b5fd;
+    color: #5733a2;
+}
+
+.gm-segment-pill--active {
+    background: #ede9fe;
+    border-color: #7c3aed;
+    color: #5733a2;
+    font-weight: 600;
+}
+
+.gm-segment-pill--saving {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ── Planner summary bar ─────────────────────────────────────────── */
+
+.gm-planner-summary {
+    display: flex;
+    gap: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.gm-planner-summary-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 20px;
+    border-right: 1px solid #e5e7eb;
+}
+
+.gm-planner-summary-item:last-child {
+    border-right: none;
+}
+
+.gm-planner-summary-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+}
+
+.gm-planner-summary-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.gm-planner-summary-value.gm-text-danger {
+    color: #dc2626;
+}
+
+/* ── Pots table ──────────────────────────────────────────────────── */
+
+.gm-pots-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.gm-pots-table thead th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.gm-pots-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background 0.1s;
+}
+
+.gm-pots-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.gm-pots-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.gm-pots-table td {
+    padding: 12px;
+    vertical-align: middle;
+    color: #374151;
+}
+
+.gm-pots-table td:first-child {
+    font-weight: 600;
+    color: #111827;
+}
+
+.gm-pots-table__details {
+    color: #6b7280;
+    font-size: 12.5px;
+}
+
+.gm-pots-table__amount {
+    font-weight: 600;
+    color: #5733a2;
+}
+
+.gm-pots-table__period {
+    font-size: 12px;
+    color: #9ca3af;
+    white-space: nowrap;
+}
+
+.gm-pots-delete-btn {
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #ef4444;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.12s;
+    font-family: inherit;
+}
+
+.gm-pots-delete-btn:hover {
+    background: #fff5f5;
+}
+
+.gm-pots-empty {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13.5px;
+    padding: 28px 0;
+}
+
+/* ── Add-pot button in card header ──────────────────────────────── */
+
+.gm-btn--sm {
+    padding: 6px 14px;
+    font-size: 12.5px;
+}
+
+/* ── Pot Modal ───────────────────────────────────────────────────── */
+
+.gm-pot-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+}
+
+.gm-pot-modal-backdrop.gm-pot-modal--open {
+    display: flex;
+}
+
+.gm-pot-modal {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 16px;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+}
+
+.gm-pot-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.gm-pot-modal__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.gm-pot-modal__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #9ca3af;
+    transition: color 0.15s;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gm-pot-modal__close:hover {
+    color: #374151;
+}
+
+.gm-pot-modal__body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gm-pot-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 24px 20px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Segment-specific extra fields toggle */
+.gm-pot-extra-field {
+    display: none;
+}
+
+.gm-pot-extra-field.gm-pot-extra-field--visible {
+    display: block;
+}
+
+/* Wedding calculator hint */
+.gm-wedding-calc-hint {
+    font-size: 12px;
+    color: #7c3aed;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* ── Allocation progress bar at card bottom ──────────────────────── */
+
+.gm-allocation-bar-wrap {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.gm-allocation-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.gm-allocation-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.gm-allocation-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #5733a2);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+.gm-allocation-bar__fill--over {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .gm-planner-summary {
+        flex-direction: column;
+    }
+    .gm-planner-summary-item {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 12px 16px;
+    }
+    .gm-planner-summary-item:last-child {
+        border-bottom: none;
+    }
+    .gm-pots-table thead {
+        display: none;
+    }
+    .gm-pots-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 4px;
+    }
+    .gm-pots-table td {
+        padding: 4px 12px;
+    }
+}

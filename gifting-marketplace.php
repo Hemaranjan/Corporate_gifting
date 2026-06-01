@@ -19,6 +19,7 @@ require_once GM_PATH . 'includes/class-admin-panel.php';
 require_once GM_PATH . 'includes/class-vendor-dashboard.php';
 require_once GM_PATH . 'includes/class-occasions.php';
 require_once GM_PATH . 'includes/class-quotes.php';
+require_once GM_PATH . 'includes/class-budget-pots.php';
 
 final class Gifting_Marketplace {
 
@@ -62,6 +63,9 @@ final class Gifting_Marketplace {
 
         // Quote request system
         new GM_Quotes();
+
+        // Segment-aware budget pots
+        new GM_Budget_Pots();
 
         // Admin — allow admins to map a vendor to an Amelia Employee ID
         add_action( 'show_user_profile',                [ $this, 'amelia_id_field'          ] );
@@ -244,6 +248,7 @@ add_action( 'plugins_loaded', [ 'Gifting_Marketplace', 'get_instance' ] );
 
 register_activation_hook( __FILE__, function () {
     update_option( 'gm_flush_rewrite_rules', 1 );
+    GM_Budget_Pots::create_table();
 } );
 
 // Flush rewrite rules once to register the new giftelier-quotes endpoint.
@@ -252,4 +257,12 @@ if ( ! get_option( 'gm_quotes_rules_flushed' ) ) {
         flush_rewrite_rules();
         update_option( 'gm_quotes_rules_flushed', '1' );
     }, 99 );
+}
+
+// One-time table creation for already-active installs.
+if ( ! get_option( 'gm_budget_pots_table_created' ) ) {
+    add_action( 'plugins_loaded', function () {
+        GM_Budget_Pots::create_table();
+        update_option( 'gm_budget_pots_table_created', '1' );
+    }, 20 );
 }
