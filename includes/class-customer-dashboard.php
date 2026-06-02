@@ -196,30 +196,6 @@ class GM_Customer_Dashboard {
             'nonce'   => wp_create_nonce( 'gm_dashboard' ),
             'userId'  => get_current_user_id(),
         ] );
-
-        // Budget planner assets — loaded only on the budget endpoint
-        if ( is_wc_endpoint_url( 'giftelier-budget' ) ) {
-            $bp_css_v = filemtime( GM_PATH . 'assets/css/budget-planner.css' ) ?: '1.0.0';
-            $bp_js_v  = filemtime( GM_PATH . 'assets/js/budget-planner.js'  ) ?: '1.0.0';
-
-            wp_enqueue_style(
-                'gm-budget-planner',
-                GM_URL . 'assets/css/budget-planner.css',
-                [ 'gm-dashboard' ],
-                $bp_css_v
-            );
-            wp_enqueue_script(
-                'gm-budget-planner',
-                GM_URL . 'assets/js/budget-planner.js',
-                [ 'jquery', 'gm-dashboard' ],
-                $bp_js_v,
-                true
-            );
-            wp_localize_script( 'gm-budget-planner', 'gmBudgetPlanner', [
-                'segment' => get_user_meta( get_current_user_id(), 'gm_customer_segment', true ) ?: '',
-                'annual'  => (string) (int) get_user_meta( get_current_user_id(), 'gm_budget_yearly', true ),
-            ] );
-        }
     }
 
     /* ── AJAX: save budget ───────────────────────────────────────── */

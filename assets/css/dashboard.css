@@ -614,7 +614,6 @@
 .gm-form { display: flex; flex-direction: column; gap: 18px; }
 .gm-form-row { display: flex; flex-wrap: wrap; gap: 16px; }
 .gm-form-row--3col > * { flex: 1 1 180px; }
-.gm-form-row--2col > * { flex: 1 1 220px; }
 .gm-form-group { display: flex; flex-direction: column; gap: 6px; }
 .gm-form-label {
     font-size: .85rem;
