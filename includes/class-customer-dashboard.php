@@ -205,9 +205,8 @@ class GM_Customer_Dashboard {
 
         // Cockpit assets — browse page and budget page when a segment is set
         $on_browse = is_wc_endpoint_url( 'giftelier-browse' );
-        $on_budget = is_wc_endpoint_url( 'giftelier-budget' );
 
-        if ( ( $on_browse || $on_budget ) && class_exists( 'GM_Cockpit' ) ) {
+        if ( $on_browse && class_exists( 'GM_Cockpit' ) ) {
             $user_id = get_current_user_id();
             $segment = get_user_meta( $user_id, 'gm_customer_segment', true );
 
