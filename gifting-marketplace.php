@@ -19,6 +19,7 @@ require_once GM_PATH . 'includes/class-admin-panel.php';
 require_once GM_PATH . 'includes/class-vendor-dashboard.php';
 require_once GM_PATH . 'includes/class-occasions.php';
 require_once GM_PATH . 'includes/class-quotes.php';
+require_once GM_PATH . 'includes/class-cockpit.php';
 
 final class Gifting_Marketplace {
 
@@ -62,6 +63,9 @@ final class Gifting_Marketplace {
 
         // Quote request system
         new GM_Quotes();
+
+        // Shopping cockpit (budget tracking while browsing)
+        new GM_Cockpit();
 
         // Admin — allow admins to map a vendor to an Amelia Employee ID
         add_action( 'show_user_profile',                [ $this, 'amelia_id_field'          ] );
@@ -244,7 +248,16 @@ add_action( 'plugins_loaded', [ 'Gifting_Marketplace', 'get_instance' ] );
 
 register_activation_hook( __FILE__, function () {
     update_option( 'gm_flush_rewrite_rules', 1 );
+    GM_Cockpit::create_tables();
 } );
+
+// One-time cockpit table creation on first load (for sites already active)
+if ( ! get_option( 'gm_cockpit_tables_created' ) ) {
+    add_action( 'init', function () {
+        GM_Cockpit::create_tables();
+        update_option( 'gm_cockpit_tables_created', '1' );
+    }, 99 );
+}
 
 // Flush rewrite rules once to register the new giftelier-quotes endpoint.
 if ( ! get_option( 'gm_quotes_rules_flushed' ) ) {

@@ -196,6 +196,49 @@ class GM_Customer_Dashboard {
             'nonce'   => wp_create_nonce( 'gm_dashboard' ),
             'userId'  => get_current_user_id(),
         ] );
+
+        // Cockpit assets — browse page and budget page when a segment is set
+        $on_browse = is_wc_endpoint_url( 'giftelier-browse' );
+        $on_budget = is_wc_endpoint_url( 'giftelier-budget' );
+
+        if ( ( $on_browse || $on_budget ) && class_exists( 'GM_Cockpit' ) ) {
+            $user_id = get_current_user_id();
+            $segment = get_user_meta( $user_id, 'gm_customer_segment', true );
+
+            if ( $segment && isset( GM_Cockpit::CONFIG[ $segment ] ) ) {
+                $ck_v = filemtime( GM_PATH . 'assets/css/cockpit.css' ) ?: '1.0.0';
+                $ck_j = filemtime( GM_PATH . 'assets/js/cockpit.js'  ) ?: '1.0.0';
+
+                wp_enqueue_style(  'gm-cockpit', GM_URL . 'assets/css/cockpit.css', [ 'gm-dashboard' ], $ck_v );
+                wp_enqueue_script( 'gm-cockpit', GM_URL . 'assets/js/cockpit.js',  [ 'jquery', 'gm-dashboard' ], $ck_j, true );
+
+                $ck_config = GM_Cockpit::CONFIG[ $segment ];
+
+                // Resolve active L1/L2 from session
+                $active_l1 = 0; $active_l2 = 0; $active_l1_meta = [];
+                if ( $on_browse ) {
+                    [ $active_l1, $active_l2 ] = GM_Cockpit::get_active();
+                    if ( $active_l1 ) {
+                        foreach ( GM_Cockpit::get_l1_items( $user_id, $segment ) as $r ) {
+                            if ( (int) $r->id === $active_l1 ) {
+                                $active_l1_meta = json_decode( $r->meta_json ?? '{}', true ) ?: [];
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                wp_localize_script( 'gm-cockpit', 'gmCockpit', [
+                    'segment'      => $segment,
+                    'config'       => $ck_config,
+                    'budgetUrl'    => wc_get_account_endpoint_url( 'giftelier-budget' ),
+                    'activeL1'     => $active_l1,
+                    'activeL2'     => $active_l2,
+                    'activeL1Meta' => $active_l1_meta,
+                    'tierBands'    => GM_Cockpit::TIER_BANDS,
+                ] );
+            }
+        }
     }
 
     /* ── AJAX: save budget ───────────────────────────────────────── */

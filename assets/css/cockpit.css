@@ -1,0 +1,536 @@
+/* Giftelier — Shopping Cockpit (right panel on browse page) */
+
+/* ── Two-column browse layout ────────────────────────────────────── */
+
+.gm-browse-page {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+}
+
+.gm-browse-main {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gm-cockpit-wrap {
+    width: 310px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.gm-cockpit-wrap::-webkit-scrollbar { width: 4px; }
+.gm-cockpit-wrap::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 2px; }
+
+/* ── Panel card ──────────────────────────────────────────────────── */
+
+.gm-cockpit {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 2px 14px rgba(26,26,46,.07);
+    overflow: hidden;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-size: 13.5px;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+
+.gm-cockpit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #5733a2 0%, #7d1f6e 100%);
+    color: #fff;
+}
+
+.gm-cockpit-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.gm-cockpit-seg-badge {
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 2px 10px;
+    white-space: nowrap;
+}
+
+/* ── Body sections ───────────────────────────────────────────────── */
+
+.gm-cockpit-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.gm-cockpit-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.gm-cockpit-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+}
+
+.gm-cockpit-select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #374151;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+.gm-cockpit-select:focus {
+    outline: none;
+    border-color: #7c3aed;
+}
+
+/* ── Prompt (no events / no selection) ──────────────────────────── */
+
+.gm-cockpit-prompt {
+    text-align: center;
+    padding: 20px 12px;
+    color: #9ca3af;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.gm-cockpit-prompt a {
+    color: #7c3aed;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.gm-cockpit-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* ── Budget summary ──────────────────────────────────────────────── */
+
+.gm-cockpit-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 10px;
+}
+
+.gm-ck-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+}
+
+.gm-ck-row__label {
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gm-ck-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.gm-ck-dot--rose   { background: #E8386D; }
+.gm-ck-dot--amber  { background: #F59E0B; }
+.gm-ck-dot--green  { background: #10B981; }
+.gm-ck-dot--grey   { background: #d1d5db; }
+
+.gm-ck-row__value {
+    font-weight: 700;
+    color: #111827;
+}
+
+.gm-ck-bar-wrap {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    margin-top: 4px;
+}
+
+.gm-ck-bar-spent {
+    height: 100%;
+    background: #E8386D;
+    transition: width 0.4s ease;
+}
+
+.gm-ck-bar-cart {
+    height: 100%;
+    background: #F59E0B;
+    transition: width 0.4s ease;
+}
+
+/* ── Warning strip ───────────────────────────────────────────────── */
+
+.gm-cockpit-warn {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.gm-cockpit-warn--amber {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.gm-cockpit-warn--red {
+    background: #fff5f5;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ── Capacity estimate ───────────────────────────────────────────── */
+
+.gm-cockpit-capacity {
+    font-size: 12.5px;
+    color: #7c3aed;
+    font-weight: 600;
+    padding: 8px 12px;
+    background: #f5f3ff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* ── Extra info tags (guest count, project code, etc.) ───────────── */
+
+.gm-cockpit-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    color: #6b7280;
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 3px 8px;
+}
+
+/* ── Tier selector (Construction) ────────────────────────────────── */
+
+.gm-cockpit-tier-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.gm-cockpit-tier-btn {
+    flex: 1 1 auto;
+    padding: 5px 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #374151;
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.gm-cockpit-tier-btn:hover,
+.gm-cockpit-tier-btn--active {
+    background: #ede9fe;
+    border-color: #7c3aed;
+    color: #5733a2;
+}
+
+/* ── Cart preview ────────────────────────────────────────────────── */
+
+.gm-cockpit-cart-header {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+    margin-bottom: 6px;
+}
+
+.gm-cockpit-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.gm-ck-cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+    color: #374151;
+}
+
+.gm-ck-cart-item__name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gm-ck-cart-item__price {
+    font-weight: 700;
+    color: #111827;
+    white-space: nowrap;
+}
+
+.gm-ck-cart-remove {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.gm-cockpit-divider {
+    height: 1px;
+    background: #f3f4f6;
+}
+
+/* ── Product card warning badges ─────────────────────────────────── */
+
+.gm-product-card {
+    position: relative;
+}
+
+.gm-warn-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 5px;
+    z-index: 2;
+    line-height: 1.4;
+    max-width: calc(100% - 16px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gm-warn-badge--amber {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.gm-warn-badge--red {
+    background: #fff5f5;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Add to Cart button disabled state */
+.gm-add-to-cart[disabled],
+.gm-add-to-cart.gm-blocked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ── Budget setup card (on budget page) ──────────────────────────── */
+
+.gm-l1-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gm-l1-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gm-l1-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.gm-l1-item-name {
+    flex: 1;
+    font-weight: 600;
+    color: #111827;
+    font-size: 13.5px;
+}
+
+.gm-l1-meta {
+    font-size: 11.5px;
+    color: #6b7280;
+}
+
+.gm-l1-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.gm-l2-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.gm-l2-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+}
+
+.gm-l2-item:last-child { border-bottom: none; }
+
+.gm-l2-item-name { flex: 1; color: #374151; }
+.gm-l2-item-amount { font-weight: 700; color: #5733a2; white-space: nowrap; }
+.gm-l2-item-meta { font-size: 11.5px; color: #9ca3af; }
+
+.gm-l2-delete-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.gm-setup-inline-form {
+    padding: 12px 14px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gm-setup-inline-form .gm-form-row {
+    gap: 10px;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────── */
+
+.gm-cockpit-mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #5733a2 0%, #7d1f6e 100%);
+    color: #fff;
+    padding: 12px 16px;
+    z-index: 1000;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 -2px 12px rgba(87,51,162,.35);
+}
+
+.gm-cockpit-mobile-bar__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+}
+
+.gm-cockpit-drawer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+}
+
+.gm-cockpit-drawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+}
+
+.gm-cockpit-drawer__panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.gm-cockpit-drawer.gm-drawer--open {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .gm-browse-page {
+        flex-direction: column !important;
+    }
+    .gm-cockpit-wrap {
+        display: none;
+    }
+    .gm-cockpit-mobile-bar {
+        display: flex;
+    }
+}
+
+@media (min-width: 769px) {
+    .gm-cockpit-mobile-bar,
+    .gm-cockpit-drawer {
+        display: none !important;
+    }
+}

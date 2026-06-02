@@ -9,6 +9,14 @@ $yearly    = (int) get_user_meta( $user_id, 'gm_budget_yearly',    true );
 $monthly   = (int) get_user_meta( $user_id, 'gm_budget_monthly',   true );
 $quarterly = (int) get_user_meta( $user_id, 'gm_budget_quarterly', true );
 
+// Cockpit setup data
+$ck_segment  = get_user_meta( $user_id, 'gm_customer_segment', true );
+$has_cockpit_setup = $ck_segment && class_exists( 'GM_Cockpit' ) && isset( GM_Cockpit::CONFIG[ $ck_segment ] );
+if ( $has_cockpit_setup ) {
+    $ck_cfg      = GM_Cockpit::CONFIG[ $ck_segment ];
+    $ck_l1_items = GM_Cockpit::get_l1_items( $user_id, $ck_segment );
+}
+
 $year_spent = GM_Customer_Dashboard::get_yearly_spend();
 $year_left  = max( 0, $yearly - $year_spent );
 $year_pct   = $yearly > 0 ? min( 100, round( ( $year_spent / $yearly ) * 100 ) ) : 0;
@@ -168,4 +176,144 @@ arsort( $cat_spend );
         <p class="gm-dash-empty-text">No pending orders at the moment.</p>
         <?php endif; ?>
     </div>
+
+    <?php if ( $has_cockpit_setup ) : ?>
+    <!-- ── Cockpit L1/L2 setup ──────────────────────────────────────── -->
+    <div class="gm-dash-card" id="gm-cockpit-setup">
+        <div class="gm-dash-card__header">
+            <h3 class="gm-dash-card__title">
+                <?php echo esc_html( $ck_cfg['l1_label'] ); ?>s &amp; <?php echo esc_html( $ck_cfg['l2_label'] ); ?>s
+            </h3>
+            <button type="button" class="gm-btn gm-btn--primary gm-btn--sm" id="gm-setup-add-l1">
+                + Add <?php echo esc_html( $ck_cfg['l1_label'] ); ?>
+            </button>
+        </div>
+
+        <!-- Add L1 inline form -->
+        <div id="gm-setup-l1-form" style="display:none">
+            <form class="gm-setup-inline-form">
+                <div class="gm-form-row">
+                    <input type="text" name="l1_name" class="gm-form-input"
+                           placeholder="<?php echo esc_attr( $ck_cfg['l1_label'] ); ?> name" required />
+                    <?php if ( in_array( 'project_code', $ck_cfg['l1_meta_fields'] ) ) : ?>
+                    <input type="text" name="l1_meta_project_code" class="gm-form-input"
+                           placeholder="Project code" style="max-width:140px" />
+                    <?php endif; ?>
+                    <?php if ( in_array( 'guest_count', $ck_cfg['l1_meta_fields'] ) ) : ?>
+                    <input type="number" name="l1_meta_guest_count" class="gm-form-input"
+                           placeholder="Guest count" min="1" style="max-width:130px" />
+                    <input type="number" name="l1_meta_per_head_budget" class="gm-form-input"
+                           placeholder="Per-head budget (₹)" min="0" style="max-width:170px" />
+                    <?php endif; ?>
+                    <?php if ( in_array( 'term', $ck_cfg['l1_meta_fields'] ) ) : ?>
+                    <select name="l1_meta_term" class="gm-form-select" style="max-width:150px">
+                        <option value="">Select term</option>
+                        <option value="Term 1">Term 1</option>
+                        <option value="Term 2">Term 2</option>
+                        <option value="Term 3">Term 3</option>
+                    </select>
+                    <?php endif; ?>
+                </div>
+                <div class="gm-form-row">
+                    <button type="submit" class="gm-btn gm-btn--primary gm-btn--sm">Add</button>
+                    <button type="button" class="gm-btn gm-btn--ghost-rose gm-btn--sm"
+                            onclick="document.getElementById('gm-setup-l1-form').style.display='none'">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- L1 list -->
+        <div class="gm-l1-list">
+            <?php if ( $ck_l1_items ) :
+                foreach ( $ck_l1_items as $l1 ) :
+                    $l1_meta  = json_decode( $l1->meta_json ?? '{}', true ) ?: [];
+                    $l2_rows  = GM_Cockpit::get_l2_items( (int) $l1->id, $user_id );
+                    $l2_total = 0;
+                    foreach ( (array) $l2_rows as $lr ) $l2_total += (float) $lr->allocated;
+            ?>
+            <div class="gm-l1-item" data-id="<?php echo esc_attr( $l1->id ); ?>">
+                <div class="gm-l1-item-header">
+                    <span class="gm-l1-item-name"><?php echo esc_html( $l1->name ); ?></span>
+                    <?php if ( ! empty( $l1_meta['project_code'] ) ) : ?>
+                    <span class="gm-cockpit-meta-tag"><?php echo esc_html( $l1_meta['project_code'] ); ?></span>
+                    <?php endif; ?>
+                    <?php if ( ! empty( $l1_meta['guest_count'] ) ) : ?>
+                    <span class="gm-cockpit-meta-tag"><?php echo esc_html( $l1_meta['guest_count'] ); ?> guests</span>
+                    <?php endif; ?>
+                    <?php if ( ! empty( $l1_meta['term'] ) ) : ?>
+                    <span class="gm-cockpit-meta-tag"><?php echo esc_html( $l1_meta['term'] ); ?></span>
+                    <?php endif; ?>
+                    <span class="gm-l1-meta">₹<?php echo number_format( $l2_total, 0 ); ?> total</span>
+                    <div class="gm-l1-actions">
+                        <button type="button" class="gm-btn gm-btn--ghost gm-btn--sm gm-l1-add-l2"
+                                data-id="<?php echo esc_attr( $l1->id ); ?>">
+                            + <?php echo esc_html( $ck_cfg['l2_label'] ); ?>
+                        </button>
+                        <button type="button" class="gm-l2-delete-btn gm-l1-delete-btn"
+                                data-id="<?php echo esc_attr( $l1->id ); ?>" title="Delete event">×</button>
+                    </div>
+                </div>
+
+                <!-- L2 items -->
+                <?php if ( $l2_rows ) : ?>
+                <div class="gm-l2-list">
+                    <?php foreach ( $l2_rows as $l2 ) :
+                        $l2_meta = json_decode( $l2->meta_json ?? '{}', true ) ?: [];
+                    ?>
+                    <div class="gm-l2-item" data-id="<?php echo esc_attr( $l2->id ); ?>">
+                        <span class="gm-l2-item-name"><?php echo esc_html( $l2->name ); ?></span>
+                        <span class="gm-l2-item-amount">₹<?php echo number_format( (float) $l2->allocated, 0 ); ?></span>
+                        <?php if ( ! empty( $l2_meta['per_recipient_cap'] ) ) : ?>
+                        <span class="gm-l2-item-meta">cap ₹<?php echo number_format( (float) $l2_meta['per_recipient_cap'], 0 ); ?>/head</span>
+                        <?php elseif ( ! empty( $l2_meta['compliance_cap'] ) ) : ?>
+                        <span class="gm-l2-item-meta">cap ₹<?php echo number_format( (float) $l2_meta['compliance_cap'], 0 ); ?>/recipient</span>
+                        <?php elseif ( ! empty( $l2_meta['target_date'] ) ) : ?>
+                        <span class="gm-l2-item-meta"><?php echo esc_html( $l2_meta['target_date'] ); ?></span>
+                        <?php endif; ?>
+                        <button type="button" class="gm-l2-delete-btn"
+                                data-id="<?php echo esc_attr( $l2->id ); ?>" title="Remove">×</button>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
+                <!-- Add L2 inline form -->
+                <div class="gm-setup-l2-form" style="display:none">
+                    <form class="gm-setup-inline-form">
+                        <div class="gm-form-row">
+                            <input type="text" name="l2_name" class="gm-form-input"
+                                   placeholder="<?php echo esc_attr( $ck_cfg['l2_label'] ); ?> name" required />
+                            <input type="number" name="l2_allocated" class="gm-form-input"
+                                   placeholder="Budget (₹)" min="0" style="max-width:140px" required />
+                            <?php if ( in_array( 'per_recipient_cap', $ck_cfg['l2_meta_fields'] ) ) : ?>
+                            <input type="number" name="l2_meta_per_recipient_cap" class="gm-form-input"
+                                   placeholder="Cap per recipient (₹)" min="0" style="max-width:180px" />
+                            <?php endif; ?>
+                            <?php if ( in_array( 'compliance_cap', $ck_cfg['l2_meta_fields'] ) ) : ?>
+                            <input type="number" name="l2_meta_compliance_cap" class="gm-form-input"
+                                   placeholder="Compliance cap (₹)" min="0" style="max-width:180px" />
+                            <?php endif; ?>
+                            <?php if ( in_array( 'target_date', $ck_cfg['l2_meta_fields'] ) ) : ?>
+                            <input type="date" name="l2_meta_target_date" class="gm-form-input"
+                                   style="max-width:160px" />
+                            <?php endif; ?>
+                        </div>
+                        <div class="gm-form-row">
+                            <button type="submit" class="gm-btn gm-btn--primary gm-btn--sm">Add</button>
+                            <button type="button" class="gm-btn gm-btn--ghost-rose gm-btn--sm gm-l2-cancel-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.gm-l1-item -->
+            <?php endforeach; ?>
+            <?php else : ?>
+            <p class="gm-dash-empty-text" style="padding:16px 0">
+                No <?php echo esc_html( strtolower( $ck_cfg['l1_label'] ) ); ?>s yet.
+                Click "+ Add <?php echo esc_html( $ck_cfg['l1_label'] ); ?>" to get started.
+            </p>
+            <?php endif; ?>
+        </div><!-- /.gm-l1-list -->
+    </div><!-- /.gm-dash-card -->
+    <?php endif; // has_cockpit_setup ?>
+
 </div>
