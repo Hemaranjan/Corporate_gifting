@@ -72,6 +72,12 @@ final class Gifting_Marketplace {
         add_action( 'edit_user_profile',                [ $this, 'amelia_id_field'          ] );
         add_action( 'personal_options_update',          [ $this, 'save_amelia_id_field'     ] );
         add_action( 'edit_user_profile_update',         [ $this, 'save_amelia_id_field'     ] );
+
+        // Admin — customer segment assignment
+        add_action( 'show_user_profile',                [ $this, 'customer_segment_field'   ] );
+        add_action( 'edit_user_profile',                [ $this, 'customer_segment_field'   ] );
+        add_action( 'personal_options_update',          [ $this, 'save_customer_segment'    ] );
+        add_action( 'edit_user_profile_update',         [ $this, 'save_customer_segment'    ] );
     }
 
     /* ── Assets ───────────────────────────────────────────────────── */
@@ -239,6 +245,61 @@ final class Gifting_Marketplace {
                 update_user_meta( $user_id, '_amelia_employee_id', $new_val );
             } else {
                 delete_user_meta( $user_id, '_amelia_employee_id' );
+            }
+        }
+    }
+
+    /* ── Admin: Customer Segment Field ──────────────────────────────── */
+
+    public function customer_segment_field( $user ) {
+        if ( ! current_user_can( 'manage_options' ) ) return;
+        $val = get_user_meta( $user->ID, 'gm_customer_segment', true );
+        $segments = [
+            ''             => '— None (no cockpit) —',
+            'corporate'    => 'Corporate',
+            'school'       => 'School',
+            'wedding'      => 'Wedding',
+            'hospitals'    => 'Hospitals',
+            'construction' => 'Construction',
+        ];
+        ?>
+        <h3><?php esc_html_e( 'Giftelier Customer Type', 'gifting-marketplace' ); ?></h3>
+        <table class="form-table">
+            <tr>
+                <th><label for="gm_customer_segment"><?php esc_html_e( 'Customer Segment', 'gifting-marketplace' ); ?></label></th>
+                <td>
+                    <select name="gm_customer_segment" id="gm_customer_segment">
+                        <?php foreach ( $segments as $key => $label ) : ?>
+                        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $val, $key ); ?>>
+                            <?php echo esc_html( $label ); ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <p class="description">
+                        <?php esc_html_e( 'Sets which Shopping Cockpit mode appears on the Browse page for this customer.', 'gifting-marketplace' ); ?>
+                    </p>
+                    <?php wp_nonce_field( 'gm_save_segment', 'gm_segment_nonce' ); ?>
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+
+    public function save_customer_segment( $user_id ) {
+        if ( ! isset( $_POST['gm_segment_nonce'] ) ||
+             ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gm_segment_nonce'] ) ), 'gm_save_segment' ) ) {
+            return;
+        }
+        if ( ! current_user_can( 'edit_user', $user_id ) ) return;
+
+        $valid    = [ '', 'corporate', 'school', 'wedding', 'hospitals', 'construction' ];
+        $new_val  = sanitize_key( wp_unslash( $_POST['gm_customer_segment'] ?? '' ) );
+
+        if ( in_array( $new_val, $valid, true ) ) {
+            if ( $new_val === '' ) {
+                delete_user_meta( $user_id, 'gm_customer_segment' );
+            } else {
+                update_user_meta( $user_id, 'gm_customer_segment', $new_val );
             }
         }
     }

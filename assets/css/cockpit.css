@@ -3,8 +3,10 @@
 /* ── Two-column browse layout ────────────────────────────────────── */
 
 .gm-browse-page {
+    display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
+    gap: 20px;
 }
 
 .gm-browse-main {
