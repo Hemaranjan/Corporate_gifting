@@ -131,8 +131,12 @@
             $list.html(html);
         }
 
+        function fmtINR(n) {
+            return '₹' + Number(n).toLocaleString('en-IN');
+        }
+
         function rowHtml(o) {
-            var gCount = D.giftsBy && D.giftsBy[o.id] ? D.giftsBy[o.id].length : 0;
+            var gCount  = D.giftsBy && D.giftsBy[o.id] ? D.giftsBy[o.id].length : 0;
             var dateObj = new Date(o.date + 'T00:00:00');
             var months  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             var dateStr = dateObj.getDate() + ' ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
@@ -141,11 +145,14 @@
                           diff === 0 ? 'Today!' :
                           Math.abs(diff) + ' day' + (Math.abs(diff) !== 1 ? 's' : '') + ' ago';
 
+            var budgetHtml = o.budget ? '<span class="gm-occ-row__budget">' + fmtINR(o.budget) + ' limit</span>' : '';
+
             return '<div class="gm-occ-row" data-id="' + o.id + '">' +
                    '<div class="gm-occ-row__dot" style="background:' + hexRgba(o.color || '#E8386D', 0.15) + ';color:' + (o.color || '#E8386D') + '">' + escH(o.icon) + '</div>' +
                    '<div class="gm-occ-row__info">' +
                    '<strong class="gm-occ-row__title">' + escH(o.title) + '</strong>' +
                    '<span class="gm-occ-row__date">' + dateStr + ' · <em>' + dLabel + '</em></span>' +
+                   budgetHtml +
                    (gCount ? '<span class="gm-occ-row__gifts">🎁 ' + gCount + ' gift' + (gCount > 1 ? 's' : '') + ' planned</span>' : '') +
                    '</div>' +
                    '<div class="gm-occ-row__actions">' +
@@ -165,6 +172,7 @@
             $('#gm-occ-date-display').text(label);
             $('#gm-occ-date').val(dateStr);
             $('#gm-occ-title').val('').removeClass('is-error');
+            $('#gm-occ-budget').val('');
 
             // Suggest a name if festival
             var fests = D.festivals && D.festivals[dateStr] ? D.festivals[dateStr] : [];
@@ -178,16 +186,17 @@
         function closeModal() { $('#gm-occ-modal').removeClass('is-open'); }
 
         function saveOccasion() {
-            var title = $.trim($('#gm-occ-title').val());
-            var date  = $('#gm-occ-date').val();
-            var icon  = $('#gm-occ-icon').val()  || '🎉';
-            var color = $('#gm-occ-color').val() || '#E8386D';
+            var title  = $.trim($('#gm-occ-title').val());
+            var date   = $('#gm-occ-date').val();
+            var icon   = $('#gm-occ-icon').val()  || '🎉';
+            var color  = $('#gm-occ-color').val() || '#E8386D';
+            var budget = parseInt($('#gm-occ-budget').val()) || 0;
 
             if (!title) { $('#gm-occ-title').addClass('is-error').trigger('focus'); return; }
 
             var $btn = $('#gm-occ-save').prop('disabled', true).text('Saving…');
 
-            $.post(D.ajaxUrl, { action: 'gm_save_occasion', nonce: D.nonce, title: title, date: date, icon: icon, color: color })
+            $.post(D.ajaxUrl, { action: 'gm_save_occasion', nonce: D.nonce, title: title, date: date, icon: icon, color: color, budget: budget })
              .done(function (resp) {
                 if (resp.success) {
                     occasions = resp.data.occasions;

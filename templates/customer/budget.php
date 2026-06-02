@@ -462,6 +462,12 @@ arsort( $cat_spend );
                        placeholder="e.g. Mom's Birthday, Team Lunch…" maxlength="80" />
             </div>
             <div class="gm-form-row">
+                <label class="gm-form-label" for="gm-occ-budget">Spend Limit (₹)</label>
+                <input type="number" id="gm-occ-budget" class="gm-form-input"
+                       placeholder="e.g. 5,000" min="0" step="100" style="max-width:200px" />
+                <p class="gm-form-hint" style="margin-top:4px">Optional — tracks your gift budget for this event</p>
+            </div>
+            <div class="gm-form-row">
                 <span class="gm-form-label">Icon</span>
                 <div class="gm-icon-grid">
                     <?php

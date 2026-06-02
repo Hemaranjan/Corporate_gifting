@@ -41,10 +41,11 @@ class GM_Occasions {
         check_ajax_referer( 'gm_occ_nonce', 'nonce' );
         if ( ! is_user_logged_in() ) wp_send_json_error( 'Login required' );
 
-        $title = sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) );
-        $date  = sanitize_text_field( wp_unslash( $_POST['date']  ?? '' ) );
-        $icon  = sanitize_text_field( wp_unslash( $_POST['icon']  ?? '🎉' ) );
-        $color = sanitize_hex_color( wp_unslash( $_POST['color'] ?? '#E8386D' ) ) ?: '#E8386D';
+        $title  = sanitize_text_field( wp_unslash( $_POST['title']  ?? '' ) );
+        $date   = sanitize_text_field( wp_unslash( $_POST['date']   ?? '' ) );
+        $icon   = sanitize_text_field( wp_unslash( $_POST['icon']   ?? '🎉' ) );
+        $color  = sanitize_hex_color( wp_unslash( $_POST['color']  ?? '#E8386D' ) ) ?: '#E8386D';
+        $budget = absint( $_POST['budget'] ?? 0 );
 
         if ( ! $title || ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) ) {
             wp_send_json_error( 'Invalid input' );
@@ -52,13 +53,17 @@ class GM_Occasions {
 
         $uid  = get_current_user_id();
         $list = self::get_occasions( $uid );
-        $list[] = [
+        $item = [
             'id'    => wp_generate_uuid4(),
             'title' => $title,
             'date'  => $date,
             'icon'  => $icon,
             'color' => $color,
         ];
+        if ( $budget > 0 ) {
+            $item['budget'] = $budget;
+        }
+        $list[] = $item;
         self::set_occasions( $uid, $list );
         wp_send_json_success( [ 'occasions' => self::get_occasions( $uid ) ] );
     }
