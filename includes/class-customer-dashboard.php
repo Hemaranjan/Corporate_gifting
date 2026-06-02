@@ -80,6 +80,12 @@ class GM_Customer_Dashboard {
         }
         if ( ! $on_our_endpoint ) return;
 
+        // Calendar is now merged into Budget — redirect old URL
+        if ( is_wc_endpoint_url( 'giftelier-calendar' ) ) {
+            wp_safe_redirect( wc_get_account_endpoint_url( 'giftelier-budget' ) );
+            exit;
+        }
+
         // TC07: unauthenticated users → login page
         if ( ! is_user_logged_in() ) {
             wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
@@ -124,8 +130,8 @@ class GM_Customer_Dashboard {
     public function menu_items( $items ) {
         $logout = isset( $items['customer-logout'] ) ? [ 'customer-logout' => $items['customer-logout'] ] : [];
 
-        // Analytics is merged into the Dashboard — exclude it from nav
-        $hidden = [ 'giftelier-analytics' ];
+        // Analytics merged into Dashboard; Calendar merged into Budget
+        $hidden = [ 'giftelier-analytics', 'giftelier-calendar' ];
 
         $new = [];
         foreach ( self::ENDPOINTS as $slug => $label ) {

@@ -127,8 +127,11 @@ final class Gifting_Marketplace {
             wp_enqueue_script( 'gm-quotes', GM_URL . 'assets/js/quotes.js',  [ 'jquery' ], $qj, true );
         }
 
-        // Calendar + occasions assets
-        $need_cal = ( is_account_page() && is_wc_endpoint_url( 'giftelier-calendar' ) )
+        // Calendar + occasions assets (now also loaded on budget page)
+        $need_cal = ( is_account_page() && (
+                        is_wc_endpoint_url( 'giftelier-calendar' ) ||
+                        is_wc_endpoint_url( 'giftelier-budget' )
+                    ) )
                  || ( is_singular( 'product' ) && is_user_logged_in() );
 
         if ( $need_cal ) {
