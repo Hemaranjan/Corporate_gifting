@@ -1,0 +1,56 @@
+# WordPress core — not tracked
+wp-admin/
+wp-includes/
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+index.php
+license.txt
+readme.html
+wp-config-sample.php
+
+# Sensitive config — never commit
+wp-config.php
+local-xdebuginfo.php
+
+# Uploads & logs
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wc-logs/
+
+# Third-party plugins (not our code)
+wp-content/plugins/woocommerce/
+wp-content/plugins/dokan-lite/
+wp-content/plugins/ameliabooking/
+wp-content/plugins/shipment-tracker-for-woocommerce/
+wp-content/plugins/shiprocket/
+wp-content/plugins/index.php
+
+# Third-party themes
+wp-content/themes/astra/
+wp-content/themes/generatepress/
+wp-content/themes/twentytwentyfive/
+wp-content/themes/twentytwentyfour/
+wp-content/themes/twentytwentythree/
+wp-content/themes/index.php
+
+# Seed scripts (one-time use)
+gm-seed-products.php
+gm-seed-vendors.php
+gm-upload-logo.php
+
+# OS & editor
+.DS_Store
+*.log
+node_modules/
+.env

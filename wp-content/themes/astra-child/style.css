@@ -1,0 +1,595 @@
+/*
+Theme Name:   Astra Child – Gifting Marketplace
+Description:  Child theme for the Gifting Marketplace — warm, celebratory design built on Astra 4.x
+Author:       Gifting Marketplace
+Template:     astra
+Version:      1.0.0
+Text Domain:  astra-child-gifting
+*/
+
+/* ================================================================
+   DESIGN TOKENS
+   ================================================================ */
+:root {
+    /* Brand */
+    --gm-rose:          #E8386D;
+    --gm-rose-dark:     #C0205A;
+    --gm-rose-light:    #FDE8EE;
+    --gm-rose-pale:     #FFF3F7;
+    --gm-amber:         #F59E0B;
+    --gm-amber-light:   #FEF3C7;
+    --gm-purple:        #7C3AED;
+    --gm-purple-light:  #EDE9FE;
+    --gm-green:         #10B981;
+    --gm-green-light:   #D1FAE5;
+
+    /* Neutrals */
+    --gm-cream:         #FFF8F5;
+    --gm-white:         #FFFFFF;
+    --gm-ink:           #1A1A2E;
+    --gm-ink-soft:      #374151;
+    --gm-muted:         #6B7280;
+    --gm-pale:          #9CA3AF;
+    --gm-border:        rgba(232,56,109,.15);
+    --gm-border-light:  #E5E7EB;
+
+    /* Shadows */
+    --gm-shadow-xs:  0 1px 3px rgba(26,26,46,.07);
+    --gm-shadow-sm:  0 2px 8px rgba(26,26,46,.06);
+    --gm-shadow-md:  0 4px 20px rgba(232,56,109,.10);
+    --gm-shadow-lg:  0 8px 40px rgba(232,56,109,.14);
+
+    /* Radii */
+    --gm-radius:      12px;
+    --gm-radius-lg:   20px;
+    --gm-radius-pill: 9999px;
+
+    /* Motion */
+    --gm-ease:     cubic-bezier(.4,0,.2,1);
+    --gm-duration: 200ms;
+}
+
+/* ================================================================
+   GLOBAL
+   ================================================================ */
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--gm-cream);
+    color: var(--gm-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: var(--gm-rose);
+    transition: color var(--gm-duration) var(--gm-ease);
+}
+a:hover { color: var(--gm-rose-dark); text-decoration: none; }
+
+img { max-width: 100%; height: auto; }
+
+/* ================================================================
+   BUTTONS  — override Astra defaults with pill style
+   ================================================================ */
+.ast-btn,
+.button,
+button[type="submit"],
+input[type="submit"],
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input[type="submit"],
+.woocommerce #respond input#submit {
+    background: var(--gm-rose) !important;
+    color: var(--gm-white) !important;
+    border: none !important;
+    border-radius: var(--gm-radius-pill) !important;
+    padding: 12px 28px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: .02em !important;
+    box-shadow: 0 4px 12px rgba(232,56,109,.25) !important;
+    cursor: pointer !important;
+    transition: background var(--gm-duration) var(--gm-ease),
+                transform   var(--gm-duration) var(--gm-ease),
+                box-shadow  var(--gm-duration) var(--gm-ease) !important;
+    text-decoration: none !important;
+}
+.ast-btn:hover,
+.button:hover,
+button[type="submit"]:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover {
+    background: var(--gm-rose-dark) !important;
+    color: var(--gm-white) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(232,56,109,.35) !important;
+}
+
+/* Alt / dark buttons */
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.ast-btn-style-2 {
+    background: var(--gm-ink) !important;
+    box-shadow: 0 4px 12px rgba(26,26,46,.2) !important;
+}
+.woocommerce a.button.alt:hover { background: #2d2d4a !important; }
+
+/* ================================================================
+   SITE HEADER
+   ================================================================ */
+.site-header,
+#masthead,
+.main-header-bar {
+    background: var(--gm-white) !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-sm) !important;
+}
+
+/* Logo text */
+.site-title a,
+.ast-site-identity .site-title a {
+    color: var(--gm-rose) !important;
+    font-weight: 800 !important;
+    letter-spacing: -.03em !important;
+}
+
+/* Nav links */
+.main-header-menu .menu-item > a,
+.ast-desktop > .menu-item > a {
+    color: var(--gm-ink-soft) !important;
+    font-weight: 500 !important;
+    font-size: .9rem !important;
+}
+.main-header-menu .menu-item > a:hover,
+.main-header-menu .current-menu-item > a {
+    color: var(--gm-rose) !important;
+}
+
+/* Cart icon */
+.ast-addon-cart-icon,
+.astra-cart-counter-wrap {
+    color: var(--gm-rose) !important;
+}
+.ast-cart-menu-wrap .count {
+    background: var(--gm-rose) !important;
+    color: #fff !important;
+    border-radius: var(--gm-radius-pill) !important;
+}
+
+/* Mobile hamburger */
+.ast-mobile-menu-trigger span { background: var(--gm-rose) !important; }
+
+/* ================================================================
+   BREADCRUMBS
+   ================================================================ */
+.ast-breadcrumbs-wrapper,
+#breadcrumbs,
+.woocommerce-breadcrumb {
+    background: var(--gm-rose-pale) !important;
+    color: var(--gm-muted) !important;
+    padding: 12px 0 !important;
+    font-size: .82rem !important;
+}
+.ast-breadcrumbs-wrapper a,
+.woocommerce-breadcrumb a {
+    color: var(--gm-rose) !important;
+}
+
+/* Hide Astra's breadcrumb on vendor store pages (body.author) —
+   we render our own below the nav bar */
+body.author .ast-breadcrumbs-wrapper,
+body.author #breadcrumbs,
+body.author #ast-breadcrumbs-yoast {
+    display: none !important;
+}
+
+/* ================================================================
+   WOOCOMMERCE — GLOBAL OVERRIDES
+   ================================================================ */
+
+/* Notice banners */
+.woocommerce-message,
+.woocommerce-info {
+    border-top-color: var(--gm-rose) !important;
+    background: var(--gm-rose-pale) !important;
+    border-radius: var(--gm-radius) !important;
+}
+
+/* Sale badge */
+.woocommerce span.onsale {
+    background: var(--gm-rose) !important;
+    border-radius: var(--gm-radius-pill) !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    padding: 4px 12px !important;
+    font-size: .72rem !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    height: auto !important;
+}
+
+/* Star ratings */
+.woocommerce .star-rating span::before,
+.woocommerce-page .star-rating span::before {
+    color: var(--gm-amber) !important;
+}
+
+/* Prices */
+.woocommerce .price,
+.woocommerce-page .price,
+ins .amount,
+.price ins .amount {
+    color: var(--gm-rose-dark) !important;
+    font-weight: 700 !important;
+}
+del .amount { color: var(--gm-pale) !important; }
+
+/* ================================================================
+   WC — FORM FIELDS
+   ================================================================ */
+.woocommerce-page input[type="text"],
+.woocommerce-page input[type="email"],
+.woocommerce-page input[type="password"],
+.woocommerce-page input[type="tel"],
+.woocommerce-page input[type="number"],
+.woocommerce-page textarea,
+.woocommerce-page select {
+    border: 1.5px solid var(--gm-border-light) !important;
+    border-radius: var(--gm-radius) !important;
+    padding: 12px 16px !important;
+    font-size: .95rem !important;
+    background: var(--gm-white) !important;
+    transition: border-color var(--gm-duration) var(--gm-ease),
+                box-shadow    var(--gm-duration) var(--gm-ease) !important;
+}
+.woocommerce-page input[type="text"]:focus,
+.woocommerce-page input[type="email"]:focus,
+.woocommerce-page input[type="password"]:focus {
+    border-color: var(--gm-rose) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(232,56,109,.12) !important;
+}
+
+/* ================================================================
+   WC — LOGIN / MY ACCOUNT
+   ================================================================ */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+    background: var(--gm-white);
+    border-radius: var(--gm-radius-lg);
+    padding: 20px 0;
+    box-shadow: var(--gm-shadow-sm);
+    border: 1px solid var(--gm-border-light);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation li {
+    list-style: none;
+    margin: 0;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation li a {
+    display: flex;
+    align-items: center;
+    padding: 11px 24px;
+    color: var(--gm-ink-soft) !important;
+    font-weight: 500;
+    font-size: .9rem;
+    border-left: 3px solid transparent;
+    transition: all var(--gm-duration) var(--gm-ease);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation li a:hover,
+.woocommerce-account .woocommerce-MyAccount-navigation li.is-active a {
+    color: var(--gm-rose) !important;
+    border-left-color: var(--gm-rose);
+    background: var(--gm-rose-pale);
+}
+
+/* Login form card */
+.woocommerce-page.woocommerce-account:not(.logged-in) .woocommerce {
+    max-width: 480px;
+    margin: 48px auto;
+    background: var(--gm-white);
+    border-radius: var(--gm-radius-lg);
+    padding: 40px;
+    box-shadow: var(--gm-shadow-lg);
+    border: 1px solid var(--gm-border-light);
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.site-footer,
+#colophon,
+.ast-footer-break-point-layout {
+    background: var(--gm-ink) !important;
+    color: rgba(255,255,255,.65) !important;
+}
+.site-footer a,
+#colophon a {
+    color: rgba(255,255,255,.65) !important;
+}
+.site-footer a:hover,
+#colophon a:hover {
+    color: var(--gm-rose-light) !important;
+}
+.site-footer h1,
+.site-footer h2,
+.site-footer h3,
+.site-footer h4 {
+    color: var(--gm-white) !important;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 768px) {
+    .woocommerce-page.woocommerce-account:not(.logged-in) .woocommerce {
+        padding: 28px 20px;
+        margin: 24px 16px;
+        border-radius: var(--gm-radius);
+    }
+}
+
+/* ================================================================
+   LOGIN / SIGN UP PAGE  (woocommerce/myaccount/form-login.php)
+   ================================================================ */
+
+/* Widen the WC My Account container on the login page */
+.woocommerce-page.woocommerce-account:not(.logged-in) .woocommerce {
+    max-width: 760px;
+    margin: 48px auto;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0 16px;
+}
+
+.gm-login-wrap {
+    width: 100%;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Role cards */
+.gm-login-roles {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.gm-login-role {
+    background: var(--gm-white);
+    border: 1.5px solid var(--gm-border-light);
+    border-radius: var(--gm-radius-lg);
+    padding: 24px 28px;
+    text-align: center;
+}
+
+.gm-login-role--customer {
+    border-color: var(--gm-rose);
+    box-shadow: 0 4px 20px rgba(232,56,109,.10);
+}
+
+.gm-login-role--vendor {
+    border-color: #7C3AED;
+    box-shadow: 0 4px 20px rgba(124,58,237,.10);
+}
+
+.gm-login-role__icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.gm-login-role h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gm-ink);
+    margin: 0 0 12px;
+}
+
+.gm-login-role ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: .82rem;
+    color: var(--gm-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.gm-login-role ul li::before {
+    content: "✓ ";
+    color: var(--gm-rose);
+    font-weight: 700;
+}
+
+.gm-login-role--vendor ul li::before {
+    color: #7C3AED;
+}
+
+.gm-login-role__sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+}
+
+.gm-login-role__sep span {
+    background: var(--gm-border-light);
+    color: var(--gm-muted);
+    font-size: .78rem;
+    font-weight: 600;
+    border-radius: var(--gm-radius-pill);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Note */
+.gm-login-note {
+    text-align: center;
+    font-size: .83rem;
+    color: var(--gm-muted);
+    margin: 0 0 24px;
+}
+
+/* Tabs */
+.gm-login-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--gm-border-light);
+    margin-bottom: 28px;
+    gap: 4px;
+}
+
+.gm-login-tab {
+    padding: 10px 24px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--gm-muted) !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color var(--gm-duration) var(--gm-ease),
+                border-color var(--gm-duration) var(--gm-ease);
+}
+
+.gm-login-tab.is-active,
+.gm-login-tab:hover {
+    color: var(--gm-rose) !important;
+    border-bottom-color: var(--gm-rose);
+}
+
+/* Form panels */
+.gm-login-panel {
+    display: none;
+    background: var(--gm-white);
+    border: 1.5px solid var(--gm-border-light);
+    border-radius: var(--gm-radius-lg);
+    padding: 36px 40px;
+    box-shadow: var(--gm-shadow-md);
+}
+
+.gm-login-panel.is-visible {
+    display: block;
+}
+
+/* Fields */
+.gm-field {
+    margin-bottom: 18px;
+}
+
+.gm-field label {
+    display: block;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--gm-ink-soft);
+    margin-bottom: 6px;
+}
+
+.gm-field input {
+    width: 100%;
+    border: 1.5px solid var(--gm-border-light) !important;
+    border-radius: var(--gm-radius) !important;
+    padding: 12px 16px !important;
+    font-size: .95rem !important;
+    background: var(--gm-white) !important;
+    transition: border-color var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease) !important;
+    box-sizing: border-box;
+}
+
+.gm-field input:focus {
+    border-color: var(--gm-rose) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(232,56,109,.12) !important;
+}
+
+.gm-field-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.gm-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .85rem;
+    color: var(--gm-ink-soft);
+    cursor: pointer;
+}
+
+.gm-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    accent-color: var(--gm-rose);
+}
+
+.gm-lost-password {
+    font-size: .82rem;
+    color: var(--gm-rose) !important;
+    text-decoration: none !important;
+}
+
+.gm-lost-password:hover {
+    text-decoration: underline !important;
+}
+
+/* Submit button */
+.gm-btn-submit {
+    width: 100%;
+    background: var(--gm-rose) !important;
+    color: var(--gm-white) !important;
+    border: none !important;
+    border-radius: var(--gm-radius-pill) !important;
+    padding: 14px 28px !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 16px rgba(232,56,109,.28) !important;
+    transition: background var(--gm-duration) var(--gm-ease),
+                transform var(--gm-duration) var(--gm-ease) !important;
+}
+
+.gm-btn-submit:hover {
+    background: var(--gm-rose-dark) !important;
+    transform: translateY(-1px) !important;
+}
+
+.gm-hint {
+    font-size: .82rem;
+    color: var(--gm-muted);
+    margin-bottom: 18px;
+}
+
+.gm-switch-tab {
+    text-align: center;
+    font-size: .84rem;
+    color: var(--gm-muted);
+    margin: 20px 0 0;
+}
+
+.gm-switch-tab a {
+    color: var(--gm-rose) !important;
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.gm-switch-tab a:hover {
+    text-decoration: underline !important;
+}
+
+@media (max-width: 600px) {
+    .gm-login-roles {
+        grid-template-columns: 1fr;
+    }
+    .gm-login-role__sep {
+        padding: 8px 0;
+    }
+    .gm-login-panel {
+        padding: 24px 20px;
+    }
+}
