@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Giftelier — Vendor Onboarding Sync Step
+   Scoped to .gm-ob-wrap so it never leaks into Dokan's own wizard styles.
+   ========================================================================== */
+
+.gm-ob-wrap {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* ── Headings ─────────────────────────────────────────────────────────── */
+.gm-ob-heading {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.gm-ob-sub {
+    font-size: 14.5px;
+    color: #6b7280;
+    margin: 0 0 28px;
+    line-height: 1.6;
+}
+
+/* ── Platform grid ────────────────────────────────────────────────────── */
+.gm-ob-platforms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 600px) {
+    .gm-ob-platforms { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gm-ob-platform {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 12px;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color .18s, box-shadow .18s, transform .15s;
+    position: relative;
+}
+
+.gm-ob-platform:hover {
+    border-color: #5733a2;
+    box-shadow: 0 4px 16px rgba(87,51,162,.12);
+    transform: translateY(-2px);
+}
+
+.gm-ob-platform--selected {
+    border-color: #5733a2;
+    background: #f5f3ff;
+}
+
+.gm-ob-platform--selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    background: #5733a2;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 18px;
+}
+
+.gm-ob-platform--skip {
+    border-style: dashed;
+    border-color: #d1d5db;
+    background: #fafafa;
+}
+
+.gm-ob-platform--skip:hover {
+    border-color: #9ca3af;
+    box-shadow: none;
+    transform: none;
+}
+
+.gm-ob-platform--skip.gm-ob-platform--selected {
+    border-color: #6b7280;
+    background: #f3f4f6;
+}
+
+.gm-ob-platform--skip.gm-ob-platform--selected::after {
+    background: #6b7280;
+}
+
+.gm-ob-platform__icon {
+    font-size: 26px;
+    line-height: 1;
+}
+
+.gm-ob-platform__label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.3;
+}
+
+.gm-ob-platform__desc {
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+/* ── Credential panels ────────────────────────────────────────────────── */
+.gm-ob-creds {
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+}
+
+.gm-ob-creds__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 16px;
+}
+
+/* ── Form fields ──────────────────────────────────────────────────────── */
+.gm-ob-field {
+    margin-bottom: 16px;
+}
+
+.gm-ob-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.gm-ob-req { color: #ef4444; margin-left: 2px; }
+
+.gm-ob-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a1a2e;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.gm-ob-input:focus {
+    outline: none;
+    border-color: #5733a2;
+    box-shadow: 0 0 0 3px rgba(87,51,162,.12);
+}
+
+.gm-ob-input--narrow { max-width: 220px; }
+
+.gm-ob-input-file {
+    display: block;
+    font-size: 13.5px;
+    color: #374151;
+    margin-top: 4px;
+}
+
+.gm-ob-hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 5px 0 0;
+    line-height: 1.5;
+}
+
+.gm-ob-hint code {
+    background: #e5e7eb;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #374151;
+}
+
+/* ── Sync interval row ────────────────────────────────────────────────── */
+.gm-ob-interval {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.gm-ob-interval .gm-ob-label { margin-bottom: 0; white-space: nowrap; }
+.gm-ob-interval .gm-ob-hint  { width: 100%; margin-top: 6px; }
+
+/* ── Action buttons ───────────────────────────────────────────────────── */
+.gm-ob-actions,
+.gm-ob-skip-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.gm-ob-submit-btn {
+    background: #5733a2 !important;
+    border-color: #5733a2 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+}
+
+.gm-ob-submit-btn:hover {
+    background: #3f2578 !important;
+    border-color: #3f2578 !important;
+    box-shadow: 0 4px 14px rgba(87,51,162,.3) !important;
+}
+
+.gm-ob-skip-link {
+    font-size: 13px;
+    color: #9ca3af !important;
+    text-decoration: underline;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.gm-ob-skip-link:hover { color: #6b7280 !important; }

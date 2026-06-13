@@ -23,6 +23,7 @@ require_once GM_PATH . 'includes/class-category-setup.php';
 require_once GM_PATH . 'includes/class-seed-data.php';
 require_once GM_PATH . 'includes/class-product-industry.php';
 require_once GM_PATH . 'includes/class-sync-hub.php';
+require_once GM_PATH . 'includes/class-vendor-onboarding.php';
 
 final class Gifting_Marketplace {
 
@@ -79,6 +80,9 @@ final class Gifting_Marketplace {
 
         // Sync Hub — multi-platform product import for vendors
         new GM_Sync_Hub();
+
+        // Vendor onboarding — injects sync step into Dokan setup wizard
+        new GM_Vendor_Onboarding();
 
         // Admin — allow admins to map a vendor to an Amelia Employee ID
         add_action( 'show_user_profile',                [ $this, 'amelia_id_field'          ] );
