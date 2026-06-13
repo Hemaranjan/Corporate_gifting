@@ -57,12 +57,17 @@ class GM_Vendor_Onboarding {
 
     /* ── View ───────────────────────────────────────────────────────── */
 
+    /** Build the URL that lands on the 'next_steps' (Ready!) screen. */
+    private function next_step_url(): string {
+        return add_query_arg( [
+            'step'           => 'next_steps',
+            '_admin_sw_nonce' => wp_create_nonce( 'dokan_admin_setup_wizard_nonce' ),
+        ] );
+    }
+
     public function render_sync_step(): void {
-        // Back link to re-render this step after save attempt
-        $skip_url = esc_url( add_query_arg( 'step', 'next_steps', dokan_get_navigation_url( 'settings' ) ) );
-        // Dokan handles next step URL via its own get_next_step_link(), but we
-        // grab it directly since we're inside the wizard object's method scope.
-        // "Skip" sends a hidden flag so handle_sync_step() knows to no-op.
+        // Direct skip URL — goes straight to Ready! without a form submission.
+        $skip_url = esc_url( $this->next_step_url() );
         ?>
         <div class="gm-ob-wrap">
 
@@ -203,19 +208,25 @@ class GM_Vendor_Onboarding {
 
                 <!-- ── Actions ──────────────────────────────────────── -->
                 <p class="gm-ob-actions" id="gm-ob-actions" hidden>
-                    <button type="submit" class="button-primary button button-large dokan-btn-theme gm-ob-submit-btn">
+                    <?php /*
+                     * name="save_step" is REQUIRED — Dokan only calls our handler
+                     * when $_POST['save_step'] is non-empty.
+                     */ ?>
+                    <button type="submit" name="save_step" value="1"
+                            class="button-primary button button-large dokan-btn-theme gm-ob-submit-btn">
                         <?php esc_html_e( 'Connect & Continue →', 'gifting-marketplace' ); ?>
                     </button>
-                    <a href="#" class="button button-large gm-ob-skip-link">
+                    <a href="<?php echo $skip_url; ?>" class="button button-large gm-ob-skip-link">
                         <?php esc_html_e( 'Skip for now', 'gifting-marketplace' ); ?>
                     </a>
                 </p>
 
                 <!-- Skip action (shown when skip card selected) -->
                 <p class="gm-ob-skip-actions" id="gm-ob-skip-actions" hidden>
-                    <button type="submit" class="button-primary button button-large dokan-btn-theme">
+                    <a href="<?php echo $skip_url; ?>"
+                       class="button-primary button button-large dokan-btn-theme">
                         <?php esc_html_e( 'Continue to Dashboard →', 'gifting-marketplace' ); ?>
-                    </button>
+                    </a>
                 </p>
 
             </form>
@@ -226,17 +237,16 @@ class GM_Vendor_Onboarding {
     /* ── Handler ────────────────────────────────────────────────────── */
 
     public function handle_sync_step(): void {
-        if ( ! isset( $_POST['gm_ob_nonce'] ) ||
-             ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gm_ob_nonce'] ) ), 'gm_ob_sync_save' ) ) {
-            return;
-        }
+        // Nonce check — bail silently (still redirect) on failure.
+        $nonce_ok = isset( $_POST['gm_ob_nonce'] ) &&
+                    wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gm_ob_nonce'] ) ), 'gm_ob_sync_save' );
 
-        $skip     = ! empty( $_POST['gm_ob_skip'] );
         $platform = sanitize_key( $_POST['gm_ob_platform'] ?? '' );
 
-        // Skip or no platform chosen → just proceed
-        if ( $skip || empty( $platform ) || $platform === 'skip' ) {
-            return;
+        // No platform or explicit skip → go straight to Ready!
+        if ( ! $nonce_ok || empty( $platform ) || $platform === 'skip' ) {
+            wp_safe_redirect( esc_url_raw( $this->next_step_url() ) );
+            exit;
         }
 
         $vendor_id = get_current_user_id();
@@ -260,9 +270,10 @@ class GM_Vendor_Onboarding {
                 break;
 
             case 'csv':
-                // CSV is handled post-wizard via the Sync Hub upload; save intent only
+                // CSV handled post-wizard via Sync Hub; save intent and move on
                 update_user_meta( $vendor_id, 'gm_onboarding_sync_pending', 'csv' );
-                return;
+                wp_safe_redirect( esc_url_raw( $this->next_step_url() ) );
+                exit;
 
             case 'google_sheets':
                 $creds = [
@@ -279,19 +290,18 @@ class GM_Vendor_Onboarding {
                 break;
         }
 
-        // Validate required fields are present
+        // Create connection if we have valid credentials
         $has_creds = array_filter( $creds );
-        if ( empty( $has_creds ) || ! class_exists( 'GM_Sync_Connection' ) ) {
-            return;
+        if ( ! empty( $has_creds ) && class_exists( 'GM_Sync_Connection' ) ) {
+            $result = GM_Sync_Connection::create( $vendor_id, $platform, $creds, $interval );
+            if ( ! is_wp_error( $result ) ) {
+                update_user_meta( $vendor_id, 'gm_onboarding_sync_connection_id', $result );
+                wp_schedule_single_event( time() + 30, 'gm_sync_periodic', [ $result ] );
+            }
         }
 
-        // Create the connection — this schedules cron automatically
-        $result = GM_Sync_Connection::create( $vendor_id, $platform, $creds, $interval );
-
-        if ( ! is_wp_error( $result ) ) {
-            update_user_meta( $vendor_id, 'gm_onboarding_sync_connection_id', $result );
-            // Kick off an immediate background sync so the vendor has products on first login
-            wp_schedule_single_event( time() + 30, 'gm_sync_periodic', [ $result ] );
-        }
+        // Always redirect — Dokan does not auto-advance after the handler returns
+        wp_safe_redirect( esc_url_raw( $this->next_step_url() ) );
+        exit;
     }
 }

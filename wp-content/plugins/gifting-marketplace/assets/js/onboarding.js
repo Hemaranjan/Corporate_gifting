@@ -40,13 +40,6 @@
         }, 300);
     });
 
-    /* ── "Skip for now" inline link ──────────────────────────────── */
-    $(document).on('click', '.gm-ob-skip-link', function (e) {
-        e.preventDefault();
-        $('#gm-ob-skip').val('1');
-        $('#gm-ob-form').submit();
-    });
-
     /* ── Form submit validation ───────────────────────────────────── */
     $('#gm-ob-form').on('submit', function (e) {
         var platform = $('#gm-ob-platform').val();
