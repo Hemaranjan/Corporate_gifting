@@ -131,22 +131,40 @@ $active_tab        = isset( $_GET['tab'] ) && $_GET['tab'] === 'register' ? 'reg
                        required aria-required="true" />
             </div>
 
-            <?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
             <div class="gm-field">
-                <label for="reg_password"><?php esc_html_e( 'Password', 'woocommerce' ); ?></label>
+                <label for="reg_password"><?php esc_html_e( 'Password', 'woocommerce' ); ?> <span class="gm-required">*</span></label>
                 <input type="password" name="password" id="reg_password" autocomplete="new-password" required aria-required="true" />
             </div>
-            <?php else : ?>
-            <p class="gm-hint"><?php esc_html_e( 'A link to set a new password will be sent to your email address.', 'woocommerce' ); ?></p>
-            <?php endif; ?>
+            <div class="gm-field">
+                <label for="reg_password2"><?php esc_html_e( 'Confirm Password', 'woocommerce' ); ?> <span class="gm-required">*</span></label>
+                <input type="password" name="password2" id="reg_password2" autocomplete="new-password" required aria-required="true" />
+            </div>
 
             <?php do_action( 'woocommerce_register_form' ); ?>
 
             <?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
 
+            <p id="gm-pw-mismatch" style="display:none;color:#dc2626;font-size:13px;margin:0 0 12px">
+                ⚠️ <?php esc_html_e( 'Passwords do not match.', 'woocommerce' ); ?>
+            </p>
+
             <button type="submit" class="gm-btn-submit" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>">
                 Create My Account
             </button>
+
+            <script>
+            (function () {
+                var p1 = document.getElementById('reg_password');
+                var p2 = document.getElementById('reg_password2');
+                var msg = document.getElementById('gm-pw-mismatch');
+                function check() {
+                    var mismatch = p1.value && p2.value && p1.value !== p2.value;
+                    msg.style.display = mismatch ? 'block' : 'none';
+                    p2.setCustomValidity(mismatch ? 'Passwords do not match' : '');
+                }
+                if (p1 && p2) { p1.addEventListener('input', check); p2.addEventListener('input', check); }
+            })();
+            </script>
 
             <?php do_action( 'woocommerce_register_form_end' ); ?>
 

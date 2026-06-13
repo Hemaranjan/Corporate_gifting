@@ -49,6 +49,23 @@ add_action( 'wp_enqueue_scripts', function () {
 add_filter( 'pre_option_blogname', function () { return 'Giftelier'; } );
 add_filter( 'option_blogname',     function () { return 'Giftelier'; } );
 
+/* ── Always require users to set their own password on registration ── */
+add_filter( 'pre_option_woocommerce_registration_generate_password', function () { return 'no'; } );
+add_filter( 'option_woocommerce_registration_generate_password',     function () { return 'no'; } );
+
+/* ── Validate confirm-password field on registration ───────────── */
+add_filter( 'woocommerce_registration_errors', function ( $errors, $username, $email ) {
+    $pass  = isset( $_POST['password']  ) ? $_POST['password']  : '';
+    $pass2 = isset( $_POST['password2'] ) ? $_POST['password2'] : '';
+    if ( $pass !== $pass2 ) {
+        $errors->add( 'password_mismatch', __( 'Passwords do not match. Please try again.', 'woocommerce' ) );
+    }
+    if ( strlen( $pass ) < 8 ) {
+        $errors->add( 'password_too_short', __( 'Password must be at least 8 characters.', 'woocommerce' ) );
+    }
+    return $errors;
+}, 10, 3 );
+
 /* ── 4. Apply Inter globally via Astra's custom CSS hook ──────── */
 add_filter( 'astra_dynamic_theme_css', function ( $css ) {
     $css .= 'body,button,input,select,textarea{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}';
