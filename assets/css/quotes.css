@@ -1,0 +1,539 @@
+/**
+ * Gifting Marketplace — Quotes System Styles
+ * Font: Plus Jakarta Sans
+ * Primary: #5733a2 | Rose: #E8386D | Green: #10B981 | Amber: #F59E0B
+ */
+
+/* =========================================================
+   Quote wrap + button (product page)
+   ========================================================= */
+
+.gm-quote-wrap {
+	border-top: 1px solid #f3f4f6;
+	padding-top: 14px;
+	margin-top: 8px;
+}
+
+.gm-quote-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	width: 100%;
+	border: 2px solid #5733a2;
+	color: #5733a2;
+	background: transparent;
+	border-radius: 8px;
+	padding: 11px 20px;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+	line-height: 1;
+}
+
+.gm-quote-btn:hover,
+.gm-quote-btn:focus {
+	background: #5733a2;
+	color: #fff;
+	outline: none;
+}
+
+.gm-quote-hint {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	font-size: 12px;
+	color: #9ca3af;
+	margin: 6px 0 0;
+	line-height: 1.4;
+}
+
+/* =========================================================
+   Quote Request Modal
+   ========================================================= */
+
+.gm-quote-modal-overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(10, 8, 30, 0.55);
+	z-index: 99999;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+}
+
+.gm-quote-modal-overlay.is-open {
+	display: flex;
+}
+
+.gm-quote-modal {
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: 0 20px 60px rgba(87, 51, 162, 0.18), 0 4px 16px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 480px;
+	padding: 24px 28px;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	animation: gmModalIn 0.22s ease;
+}
+
+@keyframes gmModalIn {
+	from { opacity: 0; transform: translateY(-14px) scale(0.97); }
+	to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.gm-quote-modal__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid #f3f4f6;
+	margin-bottom: 20px;
+}
+
+.gm-quote-modal__title {
+	font-size: 17px;
+	font-weight: 800;
+	color: #1a1a2e;
+	margin: 0 0 4px;
+}
+
+.gm-quote-modal__product-name {
+	font-size: 13px;
+	color: #5733a2;
+	font-weight: 600;
+	margin: 0;
+}
+
+.gm-quote-modal__close {
+	background: none;
+	border: none;
+	color: #9ca3af;
+	cursor: pointer;
+	padding: 3px;
+	border-radius: 6px;
+	transition: color 0.15s, background 0.15s;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	line-height: 1;
+}
+
+.gm-quote-modal__close:hover {
+	color: #374151;
+	background: #f3f4f6;
+}
+
+.gm-quote-modal__body label {
+	display: block;
+	font-size: 11.5px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #374151;
+	margin-bottom: 5px;
+}
+
+.gm-quote-modal__body input[type="number"],
+.gm-quote-modal__body textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 9px 13px;
+	border: 1.5px solid #e5e3f0;
+	border-radius: 8px;
+	font-size: 13.5px;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	color: #1a1a2e;
+	margin-bottom: 16px;
+	transition: border-color 0.18s;
+}
+
+.gm-quote-modal__body input[type="number"]:focus,
+.gm-quote-modal__body textarea:focus {
+	border-color: #5733a2;
+	outline: none;
+}
+
+.gm-quote-modal__body textarea {
+	resize: vertical;
+	min-height: 90px;
+}
+
+.gm-quote-modal__footer {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	padding-top: 16px;
+	border-top: 1px solid #f3f4f6;
+	margin-top: 0;
+}
+
+/* =========================================================
+   Quotes Table (customer dashboard)
+   ========================================================= */
+
+.gm-quotes-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.gm-quotes-table th {
+	background: #faf9ff;
+	text-align: left;
+	padding: 12px 16px;
+	font-size: 11.5px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #6b7280;
+	border-bottom: 2px solid #e9e7f3;
+}
+
+.gm-quotes-table td {
+	padding: 12px 16px;
+	border-bottom: 1px solid #f3f4f6;
+	font-size: 13.5px;
+	vertical-align: middle;
+	color: #1a1a2e;
+}
+
+.gm-quotes-table tr:last-child td {
+	border-bottom: none;
+}
+
+.gm-quotes-table tr:hover td {
+	background: #faf9ff;
+}
+
+/* =========================================================
+   Product cell (thumbnail + name)
+   ========================================================= */
+
+.gm-quotes-product-cell {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.gm-product-thumb {
+	width: 44px;
+	height: 44px;
+	border-radius: 8px;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.gm-quotes-product-cell a {
+	color: #1a1a2e;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.gm-quotes-product-cell a:hover {
+	color: #5733a2;
+}
+
+/* =========================================================
+   Status badges
+   ========================================================= */
+
+.gm-status-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 20px;
+	font-size: 11.5px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.gm-status--pending {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.gm-status--quoted {
+	background: #dbeafe;
+	color: #1d4ed8;
+}
+
+.gm-status--accepted {
+	background: #d1fae5;
+	color: #065f46;
+}
+
+.gm-status--rejected {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+/* =========================================================
+   Action buttons
+   ========================================================= */
+
+.gm-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	font-weight: 700;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+	text-decoration: none;
+	border: 2px solid transparent;
+}
+
+.gm-btn--sm {
+	padding: 6px 14px;
+	font-size: 12.5px;
+}
+
+.gm-btn--primary {
+	background: #5733a2;
+	color: #fff;
+	border-color: #5733a2;
+}
+
+.gm-btn--primary:hover {
+	background: #4527a0;
+	border-color: #4527a0;
+	color: #fff;
+}
+
+.gm-btn--ghost {
+	background: transparent;
+	color: #6b7280;
+	border-color: #e5e3f0;
+}
+
+.gm-btn--ghost:hover {
+	background: #f9f8ff;
+	color: #374151;
+	border-color: #c4b5fd;
+}
+
+.gm-btn--ghost-rose {
+	background: transparent;
+	color: #E8386D;
+	border-color: #E8386D;
+}
+
+.gm-btn--ghost-rose:hover {
+	background: #E8386D;
+	color: #fff;
+}
+
+.gm-quote-actions {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.gm-quote-muted {
+	font-size: 12.5px;
+	color: #9ca3af;
+	font-style: italic;
+}
+
+/* =========================================================
+   Vendor quote cards
+   ========================================================= */
+
+.gm-vdash-wrap.gm-vendor-quotes {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.gm-vdash-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 24px;
+}
+
+.gm-vdash-header h2 {
+	font-size: 20px;
+	font-weight: 800;
+	color: #1a1a2e;
+	margin: 0;
+}
+
+.gm-qcard {
+	background: #fff;
+	border-radius: 12px;
+	border: 1px solid #e9e7f3;
+	padding: 20px;
+	margin-bottom: 16px;
+	transition: box-shadow 0.2s ease;
+}
+
+.gm-qcard:hover {
+	box-shadow: 0 4px 20px rgba(87, 51, 162, 0.08);
+}
+
+.gm-qcard__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.gm-qcard__title {
+	font-size: 15px;
+	font-weight: 700;
+	color: #1a1a2e;
+	margin-bottom: 4px;
+}
+
+.gm-qcard__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.gm-qcard__title a:hover {
+	color: #5733a2;
+}
+
+.gm-qcard__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font-size: 12.5px;
+	color: #6b7280;
+}
+
+.gm-qcard__message {
+	margin: 12px 0;
+	padding: 10px 14px;
+	background: #faf9ff;
+	border-left: 3px solid #5733a2;
+	font-size: 13px;
+	color: #374151;
+	border-radius: 0 6px 6px 0;
+	font-style: italic;
+}
+
+.gm-qcard__response {
+	margin-top: 12px;
+	padding: 12px 14px;
+	background: #f0fdf4;
+	border-radius: 8px;
+	font-size: 13px;
+	color: #065f46;
+}
+
+.gm-qcard__response p {
+	margin: 0 0 6px;
+}
+
+.gm-qcard__response p:last-child {
+	margin-bottom: 0;
+}
+
+/* =========================================================
+   Vendor reply form
+   ========================================================= */
+
+.gm-reply-form {
+	background: #f9f8ff;
+	border-radius: 10px;
+	padding: 16px;
+	margin-top: 12px;
+	border: 1.5px dashed #c4b5fd;
+}
+
+.gm-reply-form label {
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	color: #374151;
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.gm-reply-form input,
+.gm-reply-form textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 9px 12px;
+	border: 1.5px solid #e5e3f0;
+	border-radius: 8px;
+	font-size: 13.5px;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	color: #1a1a2e;
+	margin-bottom: 12px;
+	transition: border-color 0.18s;
+}
+
+.gm-reply-form input:focus,
+.gm-reply-form textarea:focus {
+	border-color: #5733a2;
+	outline: none;
+}
+
+.gm-reply-form textarea {
+	resize: vertical;
+	min-height: 72px;
+}
+
+/* =========================================================
+   Empty state
+   ========================================================= */
+
+.gm-empty-state {
+	text-align: center;
+	padding: 48px 20px;
+	color: #6b7280;
+}
+
+.gm-empty-state__icon {
+	font-size: 40px;
+	margin-bottom: 12px;
+}
+
+.gm-empty-state__text {
+	font-size: 14px;
+	color: #6b7280;
+	max-width: 380px;
+	margin: 0 auto;
+	line-height: 1.6;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+	.gm-quotes-table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		white-space: nowrap;
+	}
+
+	.gm-quotes-table thead,
+	.gm-quotes-table tbody,
+	.gm-quotes-table tr,
+	.gm-quotes-table th,
+	.gm-quotes-table td {
+		display: revert;
+	}
+
+	.gm-quote-modal {
+		padding: 22px 20px 20px;
+	}
+
+	.gm-qcard__header {
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.gm-vdash-header {
+		flex-wrap: wrap;
+	}
+}

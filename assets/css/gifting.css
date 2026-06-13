@@ -1,0 +1,1535 @@
+/* =================================================================
+   Giftelier — Component Styles  (gifting.css v2.0)
+   Vendor store page, directory, cart, checkout, order-received.
+   Design: matches home page — navy hero, rose CTAs, bold headings.
+   ================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
+/* ── Global design tokens (also declared in dashboard.css) ───────── */
+:root {
+    --gm-rose:          #E8386D;
+    --gm-rose-dark:     #c0215a;
+    --gm-rose-light:    #FDE8EF;
+    --gm-rose-pale:     #FFF0F5;
+    --gm-rose-dark-btn: #c0215a;
+    --gm-purple:        #7C3AED;
+    --gm-purple-light:  #EDE9FE;
+    --gm-navy:          #1A1A2E;
+    --gm-navy-mid:      #2D2B55;
+    --gm-amber:         #F59E0B;
+    --gm-amber-light:   #FEF3C7;
+    --gm-green:         #10B981;
+    --gm-green-light:   #D1FAE5;
+    --gm-ink:           #1A1A2E;
+    --gm-ink-soft:      #374151;
+    --gm-muted:         #64748B;
+    --gm-border:        #E2E0EE;
+    --gm-border-light:  #F0EFF8;
+    --gm-cream:         #FFF8F5;
+    --gm-white:         #FFFFFF;
+    --gm-radius:        14px;
+    --gm-radius-lg:     18px;
+    --gm-radius-pill:   999px;
+    --gm-shadow-xs:     0 1px 4px rgba(26,26,46,.06);
+    --gm-shadow-sm:     0 2px 14px rgba(26,26,46,.08);
+    --gm-shadow-md:     0 6px 28px rgba(26,26,46,.13);
+    --gm-shadow-xl:     0 20px 60px rgba(26,26,46,.2);
+    --gm-duration:      .2s;
+    --gm-ease:          cubic-bezier(.4,0,.2,1);
+    --gm-font:          'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── Shared Utilities ────────────────────────────────────────────── */
+
+.gm-section-badge {
+    display: inline-block;
+    background: var(--gm-rose-light);
+    color: var(--gm-rose-dark);
+    font-family: var(--gm-font);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: var(--gm-radius-pill);
+    margin-bottom: 12px;
+}
+.gm-section-badge--amber {
+    background: var(--gm-amber-light);
+    color: #92400E;
+}
+
+.gm-section-title {
+    font-family: var(--gm-font);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    color: var(--gm-ink);
+    margin: 0 0 10px;
+    letter-spacing: -.03em;
+    line-height: 1.2;
+}
+
+.gm-section-desc {
+    font-family: var(--gm-font);
+    font-size: .97rem;
+    color: var(--gm-muted);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 540px;
+}
+
+/* ================================================================
+   VENDOR STORE PAGE LAYOUT
+   ================================================================ */
+
+/* Remove Dokan sidebar completely — give all space to content */
+#dokan-secondary.dokan-store-sidebar {
+    display: none !important;
+    flex: none !important;
+    width: 0 !important;
+}
+
+.dokan-store-wrap,
+.dokan-store-wrap.layout-left,
+.dokan-store-wrap.layout-right {
+    flex-direction: column !important;
+    background: var(--gm-cream) !important;
+    margin: 0 !important;
+}
+
+#dokan-primary.dokan-single-store {
+    flex: 1 1 100% !important;
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 24px 60px !important;
+    float: none !important;
+}
+
+#dokan-content.store-page-wrap {
+    padding: 0 !important;
+}
+
+/* ── Vendor Profile Hero ──────────────────────────────────────────── */
+
+.dokan-profile-frame-wrapper {
+    margin-bottom: 0;
+    font-family: var(--gm-font);
+}
+
+/* The profile-frame is the hero container — give it the navy gradient as default */
+.dokan-single-store .profile-frame {
+    position: relative !important;
+    min-height: 300px !important;
+    background: linear-gradient(135deg, var(--gm-navy) 0%, #2D2B55 55%, #4B1B7E 100%) !important;
+    border-radius: var(--gm-radius-lg) var(--gm-radius-lg) 0 0 !important;
+    overflow: hidden !important;
+}
+
+/* Pink glow accent matching home page hero */
+.dokan-single-store .profile-frame::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(232,56,109,.35) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* profile-info-box fills the full frame */
+.dokan-single-store .profile-frame .profile-info-box,
+.dokan-single-store .profile-frame .profile-info-box.profile-layout-default {
+    position: relative !important;
+    min-height: 300px !important;
+    height: 300px !important;
+}
+
+/* Banner image — covers full hero area */
+.dokan-single-store .profile-frame .profile-info-box .profile-info-img,
+.dokan-single-store .profile-frame .profile-info-box.profile-layout-default .profile-info-img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 0 !important;
+    z-index: 0 !important;
+}
+
+/* Default banner placeholder — hide img, let .profile-frame gradient show through */
+.dokan-single-store .profile-frame .profile-info-box .profile-info-img.dummy-image {
+    opacity: 0 !important;
+}
+
+/* Gradient overlay — dark at bottom so white text is readable */
+.dokan-single-store .profile-frame .profile-info-box::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(26,26,46,.1) 0%,
+        rgba(26,26,46,.75) 100%
+    ) !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+/* Summary wrapper — overlaid at the bottom of the hero */
+.dokan-single-store .profile-frame .profile-info-box .profile-info-summery-wrapper {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 20px 32px 24px !important;
+    z-index: 2 !important;
+    color: #fff !important;
+    font-family: var(--gm-font) !important;
+}
+
+.dokan-single-store .profile-frame .profile-info-box .profile-info-summery {
+    width: 100% !important;
+}
+
+.dokan-single-store .profile-frame .profile-info-box .profile-info-head {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+/* Vendor avatar — circle with white border */
+.dokan-single-store .profile-frame .profile-img img,
+.dokan-single-store .profile-frame .profile-img-circle img {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: var(--gm-radius-pill) !important;
+    border: 3px solid rgba(255,255,255,.9) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3) !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Vendor name — white on dark */
+.dokan-single-store .profile-frame .store-name,
+.dokan-single-store .profile-frame .profile-info-head .store-name {
+    font-family: var(--gm-font) !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin: 0 0 6px !important;
+    letter-spacing: -.03em !important;
+    line-height: 1.2 !important;
+}
+
+/* Store info pills — white text */
+.dokan-single-store .profile-frame .dokan-store-info {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px 18px !important;
+    align-items: center !important;
+}
+
+.dokan-single-store .profile-frame .dokan-store-info li {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: .82rem !important;
+    color: rgba(255,255,255,.82) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.dokan-single-store .profile-frame .dokan-store-info li a {
+    color: rgba(255,255,255,.82) !important;
+}
+.dokan-single-store .profile-frame .dokan-store-info li a:hover {
+    color: #fff !important;
+}
+
+.dokan-single-store .profile-frame .dokan-store-info .fas,
+.dokan-single-store .profile-frame .dokan-store-info .far {
+    color: rgba(255,255,255,.6) !important;
+    font-size: .78rem !important;
+    width: 14px !important;
+}
+
+.dokan-single-store .profile-frame .dokan-store-info .dokan-store-rating {
+    background: rgba(255,255,255,.15) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: var(--gm-radius-pill) !important;
+}
+
+/* Social icons on hero */
+.dokan-single-store .profile-frame .store-social-wrapper { margin-top: 10px; }
+.dokan-single-store .profile-frame .store-social {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    gap: 8px !important;
+}
+.dokan-single-store .profile-frame .store-social a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: var(--gm-radius-pill) !important;
+    background: rgba(255,255,255,.15) !important;
+    color: #fff !important;
+    font-size: .8rem !important;
+    transition: background var(--gm-duration) var(--gm-ease) !important;
+}
+.dokan-single-store .profile-frame .store-social a:hover {
+    background: var(--gm-rose) !important;
+}
+
+/* ── Store Tabs (below hero) ──────────────────────────────────────── */
+
+.dokan-store-tabs {
+    background: var(--gm-white) !important;
+    border-top: none !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-xs) !important;
+    margin-bottom: 24px !important;
+}
+
+.dokan-store-tabs .dokan-list-inline,
+.dokan-store-tabs .dokan-modules-button {
+    list-style: none !important;
+    padding: 0 24px !important;
+    margin: 0 !important;
+    display: flex !important;
+    gap: 4px !important;
+    flex-wrap: wrap !important;
+}
+
+.dokan-store-tabs .dokan-list-inline li,
+.dokan-store-tabs .dokan-modules-button li {
+    margin: 0 !important;
+}
+
+.dokan-store-tabs .dokan-list-inline li a,
+.dokan-store-tabs .dokan-modules-button li a {
+    display: inline-block !important;
+    padding: 14px 18px !important;
+    font-family: var(--gm-font) !important;
+    font-size: .875rem !important;
+    font-weight: 600 !important;
+    color: var(--gm-muted) !important;
+    border-bottom: 2px solid transparent !important;
+    transition: color var(--gm-duration) var(--gm-ease),
+                border-color var(--gm-duration) var(--gm-ease) !important;
+}
+
+.dokan-store-tabs .dokan-list-inline li a:hover,
+.dokan-store-tabs .dokan-list-inline li.active a,
+.dokan-store-tabs .dokan-modules-button li a:hover,
+.dokan-store-tabs .dokan-modules-button li.active a {
+    color: var(--gm-rose) !important;
+    border-bottom-color: var(--gm-rose) !important;
+}
+
+/* ── Store info list outside hero (fallback) ──────────────────────── */
+
+.dokan-store-info {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px 24px !important;
+    align-items: center !important;
+}
+
+.dokan-store-info li {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: .85rem !important;
+    color: var(--gm-muted) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* WooCommerce "no products" notice — override blue */
+.dokan-info,
+.dokan-single-store .woocommerce-info {
+    background: var(--gm-purple-light) !important;
+    color: var(--gm-purple) !important;
+    border-top-color: var(--gm-purple) !important;
+    font-family: var(--gm-font) !important;
+    border-radius: var(--gm-radius-sm) !important;
+    font-size: .9rem !important;
+}
+.dokan-info::before,
+.dokan-single-store .woocommerce-info::before {
+    color: var(--gm-purple) !important;
+}
+
+/* Rating chip */
+.dokan-store-info .dokan-store-rating {
+    background: var(--gm-amber-light);
+    color: #92400E;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--gm-radius-pill);
+}
+.dokan-store-info .dokan-store-rating .fas { color: var(--gm-amber) !important; }
+
+/* Open / Closed badge */
+.store-open-close-notice { position: relative; }
+.store-open-close-notice .store-notice {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--gm-radius-pill);
+    font-size: .75rem;
+    font-weight: 700;
+    cursor: default;
+}
+
+/* Social icons */
+.store-social-wrapper { margin-top: 14px; }
+.store-social {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    gap: 8px !important;
+}
+.store-social li { margin: 0 !important; }
+.store-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--gm-radius-pill);
+    background: var(--gm-rose-pale);
+    color: var(--gm-rose) !important;
+    font-size: .85rem;
+    transition: background var(--gm-duration) var(--gm-ease),
+                color      var(--gm-duration) var(--gm-ease),
+                transform  var(--gm-duration) var(--gm-ease);
+}
+.store-social a:hover {
+    background: var(--gm-rose);
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+/* Dokan store tabs */
+.dokan-store-tabs {
+    background: var(--gm-white) !important;
+    border-top: 1px solid var(--gm-border-light) !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+}
+.dokan-store-tabs .dokan-list-inline {
+    list-style: none !important;
+    padding: 0 32px !important;
+    margin: 0 !important;
+    display: flex !important;
+    gap: 4px !important;
+}
+.dokan-store-tabs .dokan-list-inline li { margin: 0 !important; }
+.dokan-store-tabs .dokan-list-inline li a {
+    display: inline-block;
+    padding: 14px 18px;
+    color: var(--gm-muted) !important;
+    font-size: .875rem;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: color var(--gm-duration) var(--gm-ease),
+                border-color var(--gm-duration) var(--gm-ease);
+}
+.dokan-store-tabs .dokan-list-inline li a:hover,
+.dokan-store-tabs .dokan-list-inline li.active a {
+    color: var(--gm-rose) !important;
+    border-bottom-color: var(--gm-rose);
+}
+
+/* ================================================================
+   EVENTS SECTION
+   ================================================================ */
+
+.gm-vendor-events {
+    background: var(--gm-white);
+    border-radius: var(--gm-radius-lg);
+    margin: 32px 0 0;
+    overflow: hidden;
+    box-shadow: var(--gm-shadow-sm);
+    border: 1px solid var(--gm-border-light);
+}
+
+/* Gradient header band — dark navy like home page hero */
+.gm-section-head {
+    background: linear-gradient(135deg, var(--gm-navy) 0%, #2D2B55 55%, #4B1B7E 100%);
+    padding: 40px 40px 36px;
+    border-bottom: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+    font-family: var(--gm-font);
+}
+
+/* Pink glow accent — matches home page hero */
+.gm-section-head::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232,56,109,.4) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Override text colors for dark background */
+.gm-section-head .gm-section-badge {
+    background: rgba(232,56,109,.25);
+    color: #FFB3CC;
+    border: 1px solid rgba(232,56,109,.3);
+}
+
+.gm-section-head .gm-section-title {
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.gm-section-head .gm-section-desc {
+    color: rgba(255,255,255,.72);
+}
+
+.gm-section-head__inner { flex: 1; min-width: 260px; }
+
+/* "Skip to gifts" link — ghost button on dark header */
+.gm-scroll-hint {
+    align-self: center;
+    font-family: var(--gm-font);
+    font-size: .82rem;
+    font-weight: 700;
+    color: rgba(255,255,255,.75) !important;
+    white-space: nowrap;
+    border: 1.5px solid rgba(255,255,255,.3);
+    padding: 9px 18px;
+    border-radius: var(--gm-radius-pill);
+    transition: all var(--gm-duration) var(--gm-ease);
+    background: rgba(255,255,255,.08);
+    position: relative;
+    z-index: 1;
+}
+.gm-scroll-hint:hover {
+    color: #fff !important;
+    border-color: rgba(255,255,255,.6);
+    background: rgba(255,255,255,.15);
+}
+
+/* Amelia widget wrapper */
+.gm-amelia-wrap {
+    padding: 32px 40px 44px;
+    background: var(--gm-white);
+}
+
+/* Style Amelia's event cards to match our design system */
+.gm-amelia-wrap .am-event-item,
+.gm-amelia-wrap .am-catalog-item,
+.gm-amelia-wrap [class*="amelia-event"] {
+    border-radius: var(--gm-radius) !important;
+    border: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-xs) !important;
+    overflow: hidden !important;
+    transition: transform var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease) !important;
+}
+.gm-amelia-wrap .am-event-item:hover,
+.gm-amelia-wrap .am-catalog-item:hover,
+.gm-amelia-wrap [class*="amelia-event"]:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--gm-shadow-md) !important;
+}
+
+/* No events placeholder */
+.gm-no-events {
+    text-align: center;
+    padding: 64px 40px;
+    color: var(--gm-muted);
+}
+.gm-no-events__icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+.gm-no-events p { font-size: 1rem; margin: 0; }
+
+/* ================================================================
+   GIFTS INTRO DIVIDER
+   ================================================================ */
+
+.gm-gifts-intro {
+    margin: 36px 0 0;
+    background: linear-gradient(135deg, var(--gm-rose-pale) 0%, var(--gm-purple-light) 100%);
+    border-radius: var(--gm-radius-lg);
+    border: 1px solid rgba(232,56,109,.12);
+    overflow: hidden;
+    font-family: var(--gm-font);
+}
+
+.gm-gifts-intro__inner {
+    padding: 36px 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.gm-gifts-intro__text { flex: 1; min-width: 260px; }
+
+/* Feature pills list */
+.gm-feature-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    justify-content: center !important;
+}
+
+.gm-feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,.9);
+    padding: 9px 18px;
+    border-radius: var(--gm-radius-pill);
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--gm-ink-soft);
+    white-space: nowrap;
+}
+.gm-feature-pill span { font-size: 1.05rem; }
+
+/* ================================================================
+   PRODUCT GRID — Vendor store page
+   ================================================================ */
+
+/* Pull the grid top flush to the intro divider */
+.seller-items {
+    margin-top: 28px;
+}
+
+/* Override WooCommerce/Astra columns with a responsive grid */
+.seller-items ul.products,
+.seller-items .products.columns-3,
+.seller-items .products.columns-4,
+.seller-items .products.columns-2 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)) !important;
+    gap: 24px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 48px !important;
+}
+
+/* Product card */
+.seller-items ul.products li.product {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    border: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-xs) !important;
+    overflow: hidden !important;
+    transition: transform var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+.seller-items ul.products li.product:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--gm-shadow-md) !important;
+}
+
+/* Product image — fixed height, cover crop */
+.seller-items ul.products li.product a img,
+.seller-items ul.products li.product .woocommerce-loop-product__link img {
+    width: 100% !important;
+    height: 210px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 0 !important;
+}
+
+/* Product title */
+.seller-items ul.products li.product .woocommerce-loop-product__title,
+.seller-items ul.products li.product h2 {
+    font-family: var(--gm-font) !important;
+    font-size: .95rem !important;
+    font-weight: 700 !important;
+    color: var(--gm-ink) !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    padding: 16px 16px 4px !important;
+    letter-spacing: -.01em !important;
+}
+
+/* Price */
+.seller-items ul.products li.product .price {
+    padding: 0 16px 2px !important;
+    font-size: 1rem !important;
+    flex: 1;
+}
+
+/* Star rating */
+.seller-items ul.products li.product .star-rating {
+    margin: 4px 0 0 16px !important;
+}
+
+/* Add to cart button — rose pill like home page */
+.seller-items ul.products li.product .button.add_to_cart_button,
+.seller-items ul.products li.product a.add_to_cart_button {
+    display: block !important;
+    width: calc(100% - 32px) !important;
+    margin: 10px 16px 16px !important;
+    text-align: center !important;
+    padding: 10px 16px !important;
+    font-family: var(--gm-font) !important;
+    font-size: .875rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--gm-radius-pill) !important;
+    box-shadow: 0 2px 8px rgba(232,56,109,.2) !important;
+    letter-spacing: .01em !important;
+    transition: background var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease),
+                transform .15s var(--gm-ease) !important;
+}
+.seller-items ul.products li.product .button.add_to_cart_button:hover,
+.seller-items ul.products li.product a.add_to_cart_button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(232,56,109,.35) !important;
+}
+.seller-items ul.products li.product .button.add_to_cart_button::before {
+    content: '+ ';
+}
+
+/* "Added" state */
+.seller-items ul.products li.product .added_to_cart {
+    display: block !important;
+    width: calc(100% - 32px) !important;
+    margin: 0 16px 16px !important;
+    text-align: center !important;
+    padding: 8px 16px !important;
+    font-size: .8rem !important;
+    font-weight: 600 !important;
+    color: var(--gm-green) !important;
+    background: var(--gm-green-light) !important;
+    border-radius: var(--gm-radius-pill) !important;
+    box-shadow: none !important;
+}
+
+/* Sale badge positioning */
+.seller-items ul.products li.product .onsale {
+    top: 12px !important;
+    left: 12px !important;
+    right: auto !important;
+    margin: 0 !important;
+}
+
+/* ================================================================
+   VENDOR DIRECTORY (Store Listing Page)
+   Uses real Dokan selectors: #dokan-seller-listing-wrap ul li
+   ================================================================ */
+
+/* ── Filter / sort bar ──────────────────────────────────────────── */
+#dokan-seller-listing-wrap .dokan-store-listing-filter-wrap,
+.dokan-store-listing-filter-wrap,
+.dokan-store-list-filter-wrap {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    padding: 16px 24px !important;
+    margin-bottom: 28px !important;
+    box-shadow: var(--gm-shadow-sm) !important;
+    border: 1px solid var(--gm-border-light) !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+}
+
+/* Filter button */
+#dokan-seller-listing-wrap .dokan-store-listing-filter-wrap .dokan-btn,
+.dokan-store-listing-filter-wrap .dokan-btn {
+    background: var(--gm-rose) !important;
+    border-color: var(--gm-rose) !important;
+    color: #fff !important;
+    border-radius: var(--gm-radius-pill) !important;
+    font-family: var(--gm-font) !important;
+    font-weight: 700 !important;
+    font-size: .875rem !important;
+    padding: 8px 20px !important;
+    box-shadow: 0 2px 8px rgba(232,56,109,.25) !important;
+    transition: background var(--gm-duration) var(--gm-ease) !important;
+}
+#dokan-seller-listing-wrap .dokan-store-listing-filter-wrap .dokan-btn:hover {
+    background: var(--gm-rose-dark) !important;
+}
+
+/* ── Grid: override Dokan's float + width ───────────────────────── */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 24px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li,
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li.coloum-2,
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li.coloum-3 {
+    width: auto !important;
+    float: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ── Store card wrapper ─────────────────────────────────────────── */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-wrapper {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    border: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-xs) !important;
+    overflow: hidden !important;
+    transition: transform var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-wrapper:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--gm-shadow-md) !important;
+}
+
+/* ── Store banner (background-image area) ───────────────────────── */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info {
+    height: 190px !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    /* Default: dark navy gradient — matches home page hero */
+    background-color: var(--gm-navy) !important;
+    position: relative !important;
+}
+
+/* Dark overlay on top of banner image */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data-container {
+    height: 100% !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(26,26,46,.15) 0%,
+        rgba(26,26,46,.65) 100%
+    ) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+}
+
+/* Hide the featured/favourite badges — clean look */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .featured-favourite {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+/* Store name on banner */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data {
+    padding: 0 16px 16px !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data h2 {
+    margin: 0 0 4px !important;
+    padding: 0 !important;
+    font-family: var(--gm-font) !important;
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -.02em !important;
+    line-height: 1.2 !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data h2 a {
+    color: #fff !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4) !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data h2 a:hover {
+    color: #FFD6E5 !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4) !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data p {
+    color: rgba(255,255,255,.8) !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,.3) !important;
+    font-family: var(--gm-font) !important;
+    font-size: .82rem !important;
+    margin-bottom: 2px !important;
+}
+
+/* Rating stars on banner */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-content .store-info .store-data .dokan-seller-rating {
+    margin: 4px 0 0 !important;
+}
+
+/* ── Store footer ───────────────────────────────────────────────── */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer {
+    background: var(--gm-white) !important;
+    border-top: 1px solid var(--gm-border-light) !important;
+    padding: 14px 16px 14px 80px !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 !important;
+}
+
+/* Vendor avatar — circle floating up from footer */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer .seller-avatar {
+    position: absolute !important;
+    width: 52px !important;
+    height: 52px !important;
+    top: -26px !important;
+    left: 16px !important;
+    right: auto !important;
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-pill) !important;
+    padding: 3px !important;
+    box-shadow: 0 2px 12px rgba(26,26,46,.15) !important;
+    border: 2px solid var(--gm-white) !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer .seller-avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+/* Visit Store link */
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer a.dokan-btn,
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer .dokan-visit-store {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    background: var(--gm-rose) !important;
+    color: #fff !important;
+    border-color: var(--gm-rose) !important;
+    border-radius: var(--gm-radius-pill) !important;
+    font-family: var(--gm-font) !important;
+    font-weight: 700 !important;
+    font-size: .8rem !important;
+    padding: 7px 16px !important;
+    text-decoration: none !important;
+    transition: background var(--gm-duration) var(--gm-ease),
+                box-shadow var(--gm-duration) var(--gm-ease) !important;
+    box-shadow: 0 2px 8px rgba(232,56,109,.2) !important;
+    margin-left: auto !important;
+}
+#dokan-seller-listing-wrap ul.dokan-seller-wrap li .store-footer a.dokan-btn:hover {
+    background: var(--gm-rose-dark) !important;
+    box-shadow: 0 4px 14px rgba(232,56,109,.35) !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    #dokan-seller-listing-wrap ul.dokan-seller-wrap {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ================================================================
+   CART PAGE
+   ================================================================ */
+
+/* Event booking banner */
+.gm-cart-event-banner {
+    background: linear-gradient(135deg, var(--gm-rose) 0%, var(--gm-purple) 100%);
+    border-radius: var(--gm-radius-lg);
+    margin-bottom: 28px;
+    overflow: hidden;
+}
+
+.gm-cart-event-banner__inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+}
+
+.gm-cart-event-banner__icon {
+    font-size: 2.2rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.gm-cart-event-banner__text {
+    flex: 1;
+    color: #fff;
+}
+.gm-cart-event-banner__text strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+.gm-cart-event-banner__text span {
+    font-size: .875rem;
+    opacity: .88;
+}
+
+.gm-cart-event-banner__cta {
+    flex-shrink: 0;
+    background: rgba(255,255,255,.18) !important;
+    color: #fff !important;
+    border: 1.5px solid rgba(255,255,255,.5) !important;
+    padding: 10px 22px !important;
+    border-radius: var(--gm-radius-pill) !important;
+    font-size: .875rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    transition: background var(--gm-duration) var(--gm-ease) !important;
+    text-decoration: none !important;
+}
+.gm-cart-event-banner__cta:hover {
+    background: rgba(255,255,255,.3) !important;
+    transform: none !important;
+    color: #fff !important;
+}
+
+/* WooCommerce cart table */
+.woocommerce-cart-form table.shop_table {
+    border: 1px solid var(--gm-border-light) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    overflow: hidden !important;
+    box-shadow: var(--gm-shadow-xs) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.woocommerce-cart-form table.shop_table th {
+    background: var(--gm-rose-pale) !important;
+    color: var(--gm-ink-soft) !important;
+    font-weight: 700 !important;
+    font-size: .8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: .05em !important;
+    padding: 14px 16px !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+}
+
+.woocommerce-cart-form table.shop_table td {
+    border-bottom: 1px solid var(--gm-border-light) !important;
+    padding: 16px !important;
+    vertical-align: middle !important;
+}
+
+/* Cart totals sidebar */
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-page .cart-collaterals .cart_totals {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    padding: 28px !important;
+    border: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-sm) !important;
+}
+
+.woocommerce .cart_totals h2,
+.woocommerce-page .cart_totals h2 {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: var(--gm-ink) !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 14px !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+}
+
+.woocommerce .cart_totals table {
+    border: none !important;
+}
+
+.woocommerce .cart_totals .wc-proceed-to-checkout .checkout-button {
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+    padding: 16px !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--gm-radius-lg) !important;
+    margin-top: 16px !important;
+}
+
+/* ================================================================
+   CHECKOUT PAGE
+   ================================================================ */
+
+.woocommerce-checkout h3 {
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: var(--gm-ink) !important;
+    padding-bottom: 14px !important;
+    border-bottom: 1px solid var(--gm-border-light) !important;
+    margin-bottom: 20px !important;
+}
+
+/* Order review panel */
+.woocommerce-checkout #order_review_heading {
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.woocommerce-checkout #order_review {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    padding: 28px !important;
+    border: 1px solid var(--gm-border-light) !important;
+    box-shadow: var(--gm-shadow-sm) !important;
+}
+
+.woocommerce-checkout table.shop_table {
+    border: 1px solid var(--gm-border-light) !important;
+    border-radius: var(--gm-radius) !important;
+    overflow: hidden !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+.woocommerce-checkout table.shop_table thead th {
+    background: var(--gm-rose-pale) !important;
+    font-size: .82rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: .05em !important;
+    font-weight: 700 !important;
+}
+
+/* Place order */
+#place_order {
+    width: 100% !important;
+    display: block !important;
+    padding: 16px !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--gm-radius-lg) !important;
+    letter-spacing: .02em !important;
+    margin-top: 8px !important;
+}
+
+/* Checkout billing/shipping form */
+.woocommerce-billing-fields__field-wrapper,
+.woocommerce-shipping-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+}
+.woocommerce-billing-fields__field-wrapper .form-row-wide,
+.woocommerce-shipping-fields__field-wrapper .form-row-wide {
+    grid-column: 1 / -1;
+}
+
+/* ================================================================
+   ORDER RECEIVED / THANK YOU
+   ================================================================ */
+
+.woocommerce-order {
+    background: var(--gm-white) !important;
+    border-radius: var(--gm-radius-lg) !important;
+    padding: 44px !important;
+    max-width: 760px;
+    margin: 0 auto !important;
+    box-shadow: var(--gm-shadow-sm) !important;
+    border: 1px solid var(--gm-border-light) !important;
+}
+
+/* Confirmation message */
+.woocommerce-thankyou-order-received {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: var(--gm-green) !important;
+    background: var(--gm-green-light) !important;
+    padding: 16px 24px !important;
+    border-radius: var(--gm-radius) !important;
+    margin-bottom: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+.woocommerce-thankyou-order-received::before {
+    content: '✓';
+    background: var(--gm-green);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--gm-radius-pill);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: .9rem;
+    flex-shrink: 0;
+}
+
+/* Order meta overview */
+.woocommerce-order-overview.woocommerce-thankyou-order-details {
+    background: var(--gm-rose-pale) !important;
+    border-radius: var(--gm-radius) !important;
+    padding: 20px 24px !important;
+    margin-bottom: 32px !important;
+    list-style: none !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 16px 40px !important;
+    border: 1px solid var(--gm-border) !important;
+}
+
+.woocommerce-order-overview li {
+    margin: 0 !important;
+    font-size: .82rem !important;
+    color: var(--gm-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: .05em !important;
+    font-weight: 600 !important;
+}
+.woocommerce-order-overview li strong {
+    display: block !important;
+    color: var(--gm-ink) !important;
+    font-size: 1rem !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 700 !important;
+    margin-top: 3px !important;
+}
+
+/* ================================================================
+   TOAST NOTIFICATION
+   ================================================================ */
+
+.gm-added-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(14px);
+    background: var(--gm-ink);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--gm-radius-pill);
+    font-size: .875rem;
+    font-weight: 600;
+    z-index: 999999;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: var(--gm-shadow-xl);
+    transition: opacity .25s ease, transform .25s ease;
+}
+.gm-added-toast--visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ================================================================
+   PAGINATION
+   ================================================================ */
+
+.dokan-pagination-container .page-numbers,
+.woocommerce-pagination .page-numbers {
+    background: var(--gm-white) !important;
+    border: 1.5px solid var(--gm-border-light) !important;
+    border-radius: var(--gm-radius-pill) !important;
+    padding: 8px 14px !important;
+    font-weight: 600 !important;
+    color: var(--gm-muted) !important;
+    transition: all var(--gm-duration) var(--gm-ease) !important;
+}
+.dokan-pagination-container .page-numbers.current,
+.woocommerce-pagination .page-numbers.current,
+.dokan-pagination-container .page-numbers:hover,
+.woocommerce-pagination .page-numbers:hover {
+    background: var(--gm-rose) !important;
+    border-color: var(--gm-rose) !important;
+    color: #fff !important;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 900px) {
+    #dokan-primary.dokan-single-store {
+        padding: 0 16px 40px;
+    }
+
+    .gm-section-head { padding: 28px 24px 24px; }
+    .gm-amelia-wrap  { padding: 24px 24px 32px; }
+
+    .gm-gifts-intro__inner { padding: 28px 24px; flex-direction: column; gap: 20px; }
+    .gm-feature-list { flex-direction: row !important; flex-wrap: wrap !important; }
+
+    .seller-items ul.products {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+        gap: 16px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .gm-vendor-events { border-radius: var(--gm-radius); }
+    .gm-gifts-intro   { border-radius: var(--gm-radius); }
+
+    .gm-cart-event-banner__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px !important;
+        gap: 12px;
+    }
+    .gm-cart-event-banner__cta { align-self: flex-start; }
+
+    .profile-info-summery-wrapper { padding: 16px 20px !important; }
+
+    .woocommerce-order { padding: 24px 20px !important; }
+
+    .woocommerce-billing-fields__field-wrapper,
+    .woocommerce-shipping-fields__field-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .woocommerce-order-overview {
+        flex-direction: column;
+        gap: 12px !important;
+    }
+}
+
+/* =================================================================
+   VENDOR DASHBOARD — body.dokan-dashboard
+   Color-only overrides. Layout is left entirely to Dokan's own
+   flexbox so the sidebar text labels remain visible.
+   ================================================================= */
+
+/* ── Brand variable overrides (used by WooCommerce Analytics) ─────── */
+body.dokan-dashboard {
+    --dokan-button-background-color:  #E8386D;
+    --dokan-sidebar-background-color: #1A1A2E;
+    --dokan-link-color:               #E8386D;
+    --dokan-link-hover-color:         #c0215a;
+    --wp-admin-theme-color:           #E8386D;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── Font on the whole wrap ──────────────────────────────────────── */
+body.dokan-dashboard .dokan-dashboard-wrap {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* ── Sidebar background — navy ───────────────────────────────────── */
+body.dokan-dashboard .dokan-dash-sidebar {
+    background-color: #1A1A2E !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 28px rgba(26,26,46,.13) !important;
+    border: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu {
+    background: #1A1A2E !important;
+}
+
+/* Nav links — white text */
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li a {
+    color: rgba(255,255,255,.75) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+}
+
+/* Hover — override hardcoded #7047EB */
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li:hover {
+    background: rgba(255,255,255,.08) !important;
+}
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li:hover > a {
+    color: #fff !important;
+}
+
+/* Active — override hardcoded #7047EB */
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li.active {
+    background: #E8386D !important;
+}
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li.active > a {
+    color: #fff !important;
+}
+
+/* Sub-menus */
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li ul.navigation-submenu,
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li ul.sub-menu {
+    background: rgba(0,0,0,.25) !important;
+}
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li ul.navigation-submenu li a,
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li ul.sub-menu a {
+    color: rgba(255,255,255,.65) !important;
+}
+
+/* Bottom icon-only links */
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li.dokan-common-links a {
+    color: rgba(255,255,255,.5) !important;
+}
+body.dokan-dashboard .dokan-dash-sidebar ul.dokan-dashboard-menu li.dokan-common-links a:hover {
+    background: rgba(255,255,255,.08) !important;
+    color: #fff !important;
+}
+
+/* Store-menu header strip */
+body.dokan-dashboard .dokan-store-menu-header {
+    background: linear-gradient(135deg, #1A1A2E 0%, #2D2B55 100%) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+}
+body.dokan-dashboard .dokan-store-menu-header .vendor-info h2,
+body.dokan-dashboard .dokan-store-menu-header .vendor-info .vendor-name {
+    color: #fff !important;
+    font-weight: 800 !important;
+}
+body.dokan-dashboard .dokan-store-menu-header .vendor-info .vendor-email {
+    color: rgba(255,255,255,.5) !important;
+}
+
+/* ── Content area — white card ───────────────────────────────────── */
+body.dokan-dashboard .dokan-dashboard-content {
+    background: #fff !important;
+    border: 1px solid #E8E8F0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 14px rgba(26,26,46,.08) !important;
+    padding: 28px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* ── Alerts ──────────────────────────────────────────────────────── */
+body.dokan-dashboard .dokan-alert,
+body.dokan-dashboard .dokan-alert-warning,
+body.dokan-dashboard .dokan-alert.dokan-error {
+    background: #FEF3C7 !important;
+    color: #78350F !important;
+    border-left: 3px solid #F59E0B !important;
+    border-radius: 8px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: .9rem !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
+body.dokan-dashboard .dokan-alert-danger {
+    background: #FEF3C7 !important;
+    color: #78350F !important;
+    border-left: 3px solid #F59E0B !important;
+}
+
+/* ── Typography & headings in content ───────────────────────────── */
+body.dokan-dashboard .dokan-dashboard-content h1,
+body.dokan-dashboard .dokan-dashboard-content h2,
+body.dokan-dashboard .dokan-dashboard-content h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #1A1A2E !important;
+    letter-spacing: -.01em !important;
+}
+
+/* ── WooCommerce Analytics: stat cards ───────────────────────────── */
+body.dokan-dashboard .woocommerce-summary__item {
+    border-radius: 14px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+body.dokan-dashboard .woocommerce-summary__item.is-selected {
+    box-shadow: inset -1px -1px 0 #1A1A2E, inset 1px 0 0 #1A1A2E, inset 0 4px 0 #E8386D !important;
+}
+body.dokan-dashboard .woocommerce-summary__item-label {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+    color: #64748B !important;
+}
+body.dokan-dashboard .woocommerce-summary__item-value {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 800 !important;
+    color: #1A1A2E !important;
+}
+
+/* ── WooCommerce Analytics: chart cards ──────────────────────────── */
+body.dokan-dashboard .components-card,
+body.dokan-dashboard .components-surface.components-card {
+    border-radius: 14px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* ── Links & earning ──────────────────────────────────────────────── */
+body.dokan-dashboard .woocommerce-layout a,
+body.dokan-dashboard .woocommerce-layout .statement-order-id {
+    color: #E8386D !important;
+}
+body.dokan-dashboard .dokan-analytics-vendor-earning-section .vendor-earning {
+    color: #E8386D !important;
+    font-weight: 800 !important;
+}
+
+/* ── Astra site header — Giftelier brand purple ───────────────────── */
+
+.main-header-bar {
+    background: linear-gradient(135deg, #5733a2 0%, #7d1f6e 100%) !important;
+}
+
+.main-header-bar .site-title a,
+.main-header-bar .site-title a:hover,
+.main-header-bar .ast-builder-menu a,
+.main-header-bar .main-header-bar-navigation a,
+.main-header-bar .menu-link,
+.main-header-bar .nav-link {
+    color: #fff !important;
+}
+
+.main-header-bar .main-header-bar-navigation a:hover,
+.main-header-bar .main-header-bar-navigation .current-menu-item > a {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────── */
+body.dokan-dashboard .dokan-btn-primary {
+    background: #E8386D !important;
+    border-color: #E8386D !important;
+    color: #fff !important;
+    border-radius: 999px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+}
+body.dokan-dashboard .dokan-btn-primary:hover {
+    background: #c0215a !important;
+    border-color: #c0215a !important;
+}
+body.dokan-dashboard .dokan-btn,
+body.dokan-dashboard .dokan-btn-default {
+    border-radius: 999px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+}
